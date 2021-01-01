@@ -6,7 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'quote',
-		'vars'
+		'vars',
+		'encoding'
 	],
 	#category : #MyAdm
 }
@@ -35,12 +36,34 @@ MyAbstractExec >> argsAsString: anArgs [
 ]
 
 { #category : #utilities }
+MyAbstractExec >> doExecString: aString [
+	"Calls successor's execString implementation"
+	| encString |
+	encString := aString convertFromEncoding: encoding.
+	^ (self execString: encString) convertFromEncoding: encoding.
+	
+]
+
+{ #category : #accessing }
+MyAbstractExec >> encoding [
+
+	^ encoding
+]
+
+{ #category : #accessing }
+MyAbstractExec >> encoding: anObject [
+
+	encoding := anObject
+]
+
+{ #category : #utilities }
 MyAbstractExec >> exec: aCmd [
 
-	"Executes a list of arguments or a string command"
+	"Executes a list of arguments or a string command.
+	XXX THIS MESSAGE MUST BE USED TO EXECUTE SOMETHING, NOT execArgs neither execString!!!"
 
 	^ aCmd isString
-		  ifTrue: [ self execString: (self substVars: aCmd) ]
+		  ifTrue: [ self doExecString: (self substVars: aCmd) ]
 		  ifFalse: [ 
 		  self execArgs: (aCmd collect: [ :c | self substVars: c ]) ]
 ]
@@ -48,7 +71,7 @@ MyAbstractExec >> exec: aCmd [
 { #category : #utilities }
 MyAbstractExec >> execArgs: anArgs [
 	"Executes a command represented as a list"
-	^ self execString: (self argsAsString: anArgs)
+	^ self doExecString: (self argsAsString: anArgs)
 ]
 
 { #category : #abstract }
@@ -61,6 +84,7 @@ MyAbstractExec >> execString: aString [
 MyAbstractExec >> initialize [
 	quote := true.
 	vars := Dictionary new.
+	encoding := 'utf-8'.
 
 ]
 
