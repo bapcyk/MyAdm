@@ -4,8 +4,23 @@ I am a dummy command for debug purposes
 Class {
 	#name : #MyDummyCmd,
 	#superclass : #MyAbstractCmd,
+	#instVars : [
+		'action'
+	],
 	#category : #MyAdm
 }
+
+{ #category : #accessing }
+MyDummyCmd >> action [
+
+	^ action
+]
+
+{ #category : #accessing }
+MyDummyCmd >> action: anObject [
+
+	action := anObject
+]
 
 { #category : #accessing }
 MyDummyCmd >> help [
@@ -19,18 +34,15 @@ MyDummyCmd >> initializeWithExec: anExec [
 		initializeWithName: 'Dummy'
 		subCmds: #(  )
 		exec: anExec "ignoring actually"
-		parser: MyAlignedColumnsParser
+		parser: MyPlainTextParser
 		presenter: MyTextPresenter
 		withoutHeader: true
 ]
 
 { #category : #utilities }
 MyDummyCmd >> run: anArgs [
-	"Runs command passed as arguments list. Returns the result as a WideString.
-	It must form a command like #('ls' '/tmp') from anArgs like #('/tmp')
-	"
-	Transcript cr; show: anArgs.
-	^ anArgs asString
+	"If runAction is set then executes it otherwise returns anArgs as is"
+	^ action ifNil: [ 	anArgs asString ] ifNotNil: [ action value: anArgs ].
 
 ]
 

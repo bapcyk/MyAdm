@@ -9,7 +9,8 @@ Class {
 		'cmds',
 		'presentCmd',
 		'toolbar',
-		'windowTitle'
+		'windowTitle',
+		'modifiers'
 	],
 	#category : #MyAdm
 }
@@ -18,6 +19,7 @@ Class {
 MyAbstractPresenter >> initialize [
 	cmds ifNil: [ cmds := #() ].
 	data ifNil: [ data := #() ].
+	modifiers := OSStateModifiers new.
 	super initialize.
 ]
 
@@ -52,6 +54,8 @@ MyAbstractPresenter >> onCmd: aCmdName [
 	found ifEmpty: [ ^ nil ].
 	cmd := found first.
 	args := presentCmd selectionAsArgs: aCmdName.
+	Transcript clear; show: modifiers.
+	modifiers shift ifTrue: [self window close].
 	^ cmd runUI: args.
 
 ]

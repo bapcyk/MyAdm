@@ -19,7 +19,7 @@ MyWinServicesCmd >> initializeWithExec: anExec [
 
 	self
 		initializeWithName: 'Services'
-		subCmds: #()
+		subCmds: { (MyDummyCmd newCmd: anExec) action: [:args| '!!!!']. }
 		exec: anExec
 		parser: MyAlignedColumnsParser
 		presenter: MyTablePresenter
