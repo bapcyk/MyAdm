@@ -5,31 +5,19 @@ Class {
 	#name : #MyAbstractScript,
 	#superclass : #Object,
 	#instVars : [
-		'data'
+		'cfg'
 	],
 	#category : #MyAdm
 }
 
 { #category : #accessing }
 MyAbstractScript >> at: aKey [
-	^ data at: aKey
+	^ cfg at: aKey
 ]
 
 { #category : #accessing }
 MyAbstractScript >> at: aKey1 at: aKey2 [
-	^ (data at: aKey1) at: aKey2
-]
-
-{ #category : #accessing }
-MyAbstractScript >> data [
-
-	^ data
-]
-
-{ #category : #accessing }
-MyAbstractScript >> data: anObject [
-
-	data := anObject
+	^ (cfg at: aKey1) at: aKey2
 ]
 
 { #category : #initialization }
@@ -41,7 +29,7 @@ MyAbstractScript >> initialize [
 MyAbstractScript >> initializeWithCfg: aCfgPath [
 	| key |
 	key := self class name.
-	data := aCfgPath asFileReference readStreamDo: [ :stream | STONJSON fromStream: stream ].
+	cfg := aCfgPath asFileReference readStreamDo: [ :stream | STONJSON fromStream: stream ].
 ]
 
 { #category : #accessing }

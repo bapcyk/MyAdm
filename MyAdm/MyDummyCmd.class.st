@@ -24,7 +24,7 @@ MyDummyCmd >> action: anObject [
 
 { #category : #accessing }
 MyDummyCmd >> help [
-	^ 'Dummy command for debug only'
+	^ 'Dummy command ', name, ' for debug only'
 ]
 
 { #category : #initialization }
@@ -37,6 +37,11 @@ MyDummyCmd >> initializeWithExec: anExec [
 		parser: MyPlainTextParser
 		presenter: MyTextPresenter
 		withoutHeader: true
+]
+
+{ #category : #accessing }
+MyDummyCmd >> name: aName [
+	name := aName.
 ]
 
 { #category : #utilities }

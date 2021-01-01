@@ -10,7 +10,7 @@ Class {
 		'presentCmd',
 		'toolbar',
 		'windowTitle',
-		'modifiers'
+		'buttonHandlers'
 	],
 	#category : #MyAdm
 }
@@ -19,8 +19,8 @@ Class {
 MyAbstractPresenter >> initialize [
 	cmds ifNil: [ cmds := #() ].
 	data ifNil: [ data := #() ].
-	modifiers := OSStateModifiers new.
 	super initialize.
+	
 ]
 
 { #category : #initialization }
@@ -47,17 +47,18 @@ MyAbstractPresenter >> initializeWithParser: aParser cmds: aCmds forCmd: aCmd [
 ]
 
 { #category : #actions }
-MyAbstractPresenter >> onCmd: aCmdName [
-	"Handles a command which name is aCmdName"
+MyAbstractPresenter >> onCmd: aCmdName event: anEvent [
+
+	"Handles a command which name is aCmdName with anEvent attached. If anEvent has
+	a shiftPressed flag then the current window is closing before to open the new one"
+
 	| cmd found args |
 	found := cmds select: [ :c | c name = aCmdName ].
 	found ifEmpty: [ ^ nil ].
 	cmd := found first.
 	args := presentCmd selectionAsArgs: aCmdName.
-	Transcript clear; show: modifiers.
-	modifiers shift ifTrue: [self window close].
-	^ cmd runUI: args.
-
+	anEvent shiftPressed ifTrue: [ self window close ].
+	^ cmd runUI: args
 ]
 
 { #category : #accessing }
@@ -73,14 +74,15 @@ MyAbstractPresenter >> title [
 
 { #category : #initialization }
 MyAbstractPresenter >> updatePresenter [
-	cmds isEmpty ifTrue: [ ^ self ].
-	cmds do: [ :cmd |
-		toolbar addItem:
-			(SpToolbarButtonPresenter new label: cmd name;
-				action: [self onCmd: cmd name];
-				help: cmd help
-			)
-	].
+
+	cmds do: [ :cmd | 
+		| btn |
+		btn := SpToolbarButtonPresenter new
+			       label: cmd name;
+			       action: [];
+			       help: cmd help.
+		toolbar addItem: btn.
+		btn eventHandler whenMouseDownDo: [ :ev | self onCmd: cmd name event: ev ] ]
 
 ]
 

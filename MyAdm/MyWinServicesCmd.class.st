@@ -16,10 +16,13 @@ MyWinServicesCmd >> help [
 MyWinServicesCmd >> initializeWithExec: anExec [
 
 	"Initializes the command with the executor instance anExec"
-
+	| d1 d2 d3 |
+	d1 := (MyDummyCmd newCmd: anExec) action: [:args| '!!!!']; name: 'D1'.
+	d2 := (MyDummyCmd newCmd: anExec) action: [:args| '?????']; name: 'D2'.
+	d3 := (MyDummyCmd newCmd: anExec) action: [:args| '??!!?']; name: 'D3'.
 	self
 		initializeWithName: 'Services'
-		subCmds: { (MyDummyCmd newCmd: anExec) action: [:args| '!!!!']. }
+		subCmds: { d1. d2. d3. }
 		exec: anExec
 		parser: MyAlignedColumnsParser
 		presenter: MyTablePresenter
