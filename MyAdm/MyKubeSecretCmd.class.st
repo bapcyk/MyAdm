@@ -21,9 +21,9 @@ MyKubeSecretCmd >> initializeWithExec: anExec [
 		initializeWithName: 'Get Secret'
 		subCmds: { MyKubeBase64Cmd newCmd: anExec }
 		exec: anExec
-		parser: MyPlainTextParser
+		parser: MyPlainTextParser new
 		presenter: MyTextPresenter
-		withoutHeader: true
+
 ]
 
 { #category : #utilities }

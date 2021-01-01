@@ -24,9 +24,9 @@ MyWinServicesCmd >> initializeWithExec: anExec [
 		initializeWithName: 'Services'
 		subCmds: { d1. d2. d3. }
 		exec: anExec
-		parser: MyAlignedColumnsParser
+		parser: (MyAlignedColumnsParser new headerless: false)
 		presenter: MyTablePresenter
-		withoutHeader: false
+
 ]
 
 { #category : #utilities }

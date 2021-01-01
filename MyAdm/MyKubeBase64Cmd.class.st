@@ -21,9 +21,9 @@ MyKubeBase64Cmd >> initializeWithExec: anExec [
 		initializeWithName: 'Decode Base64'
 		subCmds: #()
 		exec: anExec
-		parser: MyPlainTextParser
+		parser: MyPlainTextParser new
 		presenter: MyTextPresenter
-		withoutHeader: true
+
 ]
 
 { #category : #utilities }

@@ -21,9 +21,9 @@ MyKubeSvcEndpointsCmd >> initializeWithExec: anExec [
 		initializeWithName: 'Service Endpoints'
 		subCmds: #( )
 		exec: anExec
-		parser: MyPlainTextParser
+		parser: MyPlainTextParser new
 		presenter: MyTextPresenter
-		withoutHeader: true
+
 ]
 
 { #category : #utilities }

@@ -21,9 +21,9 @@ MyKubeSecretDetailsCmd >> initializeWithExec: anExec [
 		initializeWithName: 'Secret Details'
 		subCmds: { MyKubeBase64Cmd newCmd: anExec }
 		exec: anExec
-		parser: MyPlainTextParser
+		parser: MyPlainTextParser new
 		presenter: MyTextPresenter
-		withoutHeader: true
+
 ]
 
 { #category : #utilities }

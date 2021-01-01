@@ -8,8 +8,7 @@ Class {
 		'name',
 		'subCmds',
 		'exec',
-		'headerless',
-		'parserClass',
+		'parser',
 		'presenterClass',
 		'presenter'
 	],
@@ -36,14 +35,14 @@ MyAbstractCmd >> initializeWithExec: anExec [
 ]
 
 { #category : #initialization }
-MyAbstractCmd >> initializeWithName: aName subCmds: aCmds exec: anExec parser: aParser presenter: aPresenter withoutHeader: aHeaderless [
+MyAbstractCmd >> initializeWithName: aName subCmds: aCmds exec: anExec parser: aParser presenter: aPresenter [
 	"Initializer"
 	name := aName.
 	subCmds := aCmds.
 	exec := anExec.
-	parserClass := aParser.
+	parser := aParser.
 	presenterClass := aPresenter.
-	headerless := aHeaderless.
+
 
 ]
 
@@ -64,13 +63,13 @@ MyAbstractCmd >> run: anArgs [
 { #category : #running }
 MyAbstractCmd >> runUI: anArgs [
 	"The same as run method but returns the result in UI"
-	| res parserInstance |
+	| res |
 	res := self run: anArgs.
-	parserInstance := parserClass parse: res withHeader: headerless not.
+	parser parse: res.
 	presenter := presenterClass new.
 	presenter windowTitle: name.
 	presenter openWithSpec.
-	presenter initializeWithParser: parserInstance cmds: subCmds forCmd: self.
+	presenter initializeWithParser: parser cmds: subCmds forCmd: self.
 	presenter updatePresenter.
 ]
 

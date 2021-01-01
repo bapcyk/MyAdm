@@ -21,9 +21,9 @@ MyKubePodYamlCmd >> initializeWithExec: anExec [
 		initializeWithName: 'YAML'
 		subCmds: #( )
 		exec: anExec
-		parser: MyPlainTextParser
+		parser: MyPlainTextParser new
 		presenter: MyTextPresenter
-		withoutHeader: true
+
 ]
 
 { #category : #utilities }

@@ -34,9 +34,9 @@ MyDummyCmd >> initializeWithExec: anExec [
 		initializeWithName: 'Dummy'
 		subCmds: #(  )
 		exec: anExec "ignoring actually"
-		parser: MyPlainTextParser
+		parser: MyPlainTextParser new
 		presenter: MyTextPresenter
-		withoutHeader: true
+
 ]
 
 { #category : #accessing }

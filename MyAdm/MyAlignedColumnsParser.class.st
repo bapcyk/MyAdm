@@ -52,17 +52,6 @@ MyAlignedColumnsParser class >> isBlankLine: aLine [
 	^ self ignoredChars includesAll: aLine
 ]
 
-{ #category : #parsing }
-MyAlignedColumnsParser class >> parse: aString withHeader: aHeader [
-   | plumb items |
-	plumb := MyParserPlumb withLines: (self splitLines: aString).
-	items := plumb collectColumns: [ :rowNum :colNum :col |
-		col
-	].
-	^ self new headerless: aHeader not; items: items
-
-]
-
 { #category : #utilities }
 MyAlignedColumnsParser class >> replaceArtifacts: aLine [
 	"Replaces artifacts (artifactChars) in the line by space"
@@ -143,18 +132,11 @@ MyAlignedColumnsParser >> headerless: aBoolean [
 	headerless := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 MyAlignedColumnsParser >> isEmpty [
 	"Tests - is not data rows"
 
 	^ 0 = self dataRowsNumber
-]
-
-{ #category : #testing }
-MyAlignedColumnsParser >> isHeaderless [
-	"Returns a flag: are headers missing"
-	^ headerless
-
 ]
 
 { #category : #accessing }
@@ -165,4 +147,13 @@ MyAlignedColumnsParser >> items [
 { #category : #accessing }
 MyAlignedColumnsParser >> items: anItems [
 	items := anItems
+]
+
+{ #category : #parsing }
+MyAlignedColumnsParser >> parse: aString [
+   | plumb |
+	plumb := MyParserPlumb withLines: (self class splitLines: aString).
+	items := plumb collectColumns: [ :rowNum :colNum :col | col ].
+
+
 ]

@@ -21,9 +21,9 @@ MyKubeSvcDetailsCmd >> initializeWithExec: anExec [
 		initializeWithName: 'Service Details'
 		subCmds: #( )
 		exec: anExec
-		parser: MyPlainTextParser
+		parser: MyPlainTextParser new
 		presenter: MyTextPresenter
-		withoutHeader: true
+
 ]
 
 { #category : #utilities }

@@ -9,8 +9,7 @@ Class {
 		'cmds',
 		'presentCmd',
 		'toolbar',
-		'windowTitle',
-		'buttonHandlers'
+		'windowTitle'
 	],
 	#category : #MyAdm
 }

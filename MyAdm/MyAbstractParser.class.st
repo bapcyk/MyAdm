@@ -7,22 +7,10 @@ Class {
 	#category : #MyAdm
 }
 
-{ #category : #parsing }
-MyAbstractParser class >> parse: aString withHeader: aBoolean [
-	self subclassResponsibility
-]
-
 { #category : #accessing }
 MyAbstractParser >> data [
 	"Getter of rows (list of columns) containing data only, not header"
 
-	self subclassResponsibility
-
-]
-
-{ #category : #accessing }
-MyAbstractParser >> header [
-	"Getter of the header columns list"
 	self subclassResponsibility
 
 ]
@@ -34,9 +22,7 @@ MyAbstractParser >> isEmpty [
 
 ]
 
-{ #category : #testing }
-MyAbstractParser >> isHeaderless [
-	"Returns a flag: are headers missing"
+{ #category : #parsing }
+MyAbstractParser >> parse: aString [
 	self subclassResponsibility
-
 ]

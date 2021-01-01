@@ -25,9 +25,9 @@ MyKubeSecretsCmd >> initializeWithExec: anExec [
 			MyKubeSecretDetailsCmd newCmd: anExec.
 		}
 		exec: anExec
-		parser: MyAlignedColumnsParser
+		parser: (MyAlignedColumnsParser new headerless: false)
 		presenter: MyTablePresenter
-		withoutHeader: false
+
 ]
 
 { #category : #utilities }

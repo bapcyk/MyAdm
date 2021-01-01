@@ -10,23 +10,11 @@ Class {
 	#category : #MyAdm
 }
 
-{ #category : #parsing }
-MyPlainTextParser class >> parse: aString withHeader: aBoolean [
-	^ self new text: aString
-]
-
 { #category : #accessing }
 MyPlainTextParser >> data [
 	"Getter of rows (list of columns) containing data only, not header"
 
 	^ text
-
-]
-
-{ #category : #accessing }
-MyPlainTextParser >> header [
-	"Getter of the header columns list"
-	^ #()
 
 ]
 
@@ -37,11 +25,9 @@ MyPlainTextParser >> isEmpty [
 
 ]
 
-{ #category : #testing }
-MyPlainTextParser >> isHeaderless [
-	"Returns a flag: are headers missing"
-	^ true
-
+{ #category : #parsing }
+MyPlainTextParser >> parse: aString [
+	self text: aString
 ]
 
 { #category : #accessing }

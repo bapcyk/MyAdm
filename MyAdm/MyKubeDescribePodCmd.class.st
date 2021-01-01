@@ -21,9 +21,9 @@ MyKubeDescribePodCmd >> initializeWithExec: anExec [
 		initializeWithName: 'Describe POD'
 		subCmds: #( )
 		exec: anExec
-		parser: MyPlainTextParser
+		parser: MyPlainTextParser new
 		presenter: MyTextPresenter
-		withoutHeader: true
+
 ]
 
 { #category : #utilities }
