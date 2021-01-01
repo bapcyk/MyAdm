@@ -1,2 +1,1 @@
-# MyAdm
-Visual scripts for devops
+# MyAdm - Visual scripts for devops## UsageOpen Playground and run some visual scripts set (all of them are successors of the `MyAbstractScript`):```MyWindowsScript1 new run.```or```MyKubeScript1 new run```etc.
