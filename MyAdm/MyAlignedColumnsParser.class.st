@@ -18,7 +18,6 @@ Molly Jonnecey |    34 | London City  |   f
 ```
 by a determining of the columns vertical bounds.
 
-Call it as `MyAlignedColumnsParser parse: columnsText withHeader: true`
 "
 Class {
 	#name : #MyAlignedColumnsParser,

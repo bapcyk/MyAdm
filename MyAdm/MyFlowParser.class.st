@@ -11,10 +11,13 @@ The OS - Linux
 or
 
 ```
-The CPU achitecture - x86.
-The environment - HOME, SHELL, LANG, USER.
+The CPU achitecture - x86
+The environment - HOME, SHELL, LANG, USER
 The OS - Linux
 ```
+
+by a splitting of lines (with either '.' or ';' or cr or lf delimiters) then splitting them on columns by
+either ':' or '-' - which one is present in all lines.
 "
 Class {
 	#name : #MyFlowParser,
