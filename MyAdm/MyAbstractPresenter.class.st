@@ -46,12 +46,10 @@ MyAbstractPresenter >> initializeWithParser: aParser cmds: aCmds forCmd: aCmd [
 ]
 
 { #category : #actions }
-MyAbstractPresenter >> onCmd: aCmdName event: anEvent [
-
-	"Handles a command which name is aCmdName with anEvent attached. If anEvent has
-	a shiftPressed flag then the current window is closing before to open the new one"
+MyAbstractPresenter >> onCmd: aCmdName event: anEvent button: aButton [
 
 	| cmd found args |
+	aButton isEnabled ifFalse: [ ^ self ].
 	found := cmds select: [ :c | c name = aCmdName ].
 	found ifEmpty: [ ^ nil ].
 	cmd := found first.
@@ -81,7 +79,7 @@ MyAbstractPresenter >> updatePresenter [
 			       action: [];
 			       help: cmd help.
 		toolbar addItem: btn.
-		btn eventHandler whenMouseDownDo: [ :ev | self onCmd: cmd name event: ev ] ]
+		btn eventHandler whenMouseDownDo: [ :ev | self onCmd: cmd name event: ev button: btn ] ]
 
 ]
 

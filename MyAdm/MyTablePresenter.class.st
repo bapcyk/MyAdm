@@ -67,12 +67,12 @@ MyTablePresenter >> updatePresenter [
 
 	cmds ifNotEmpty: [
 		table addColumn: ((SpCheckBoxTableColumn title: ' ' evaluated: [ :row | false ]) width: 20;
-						onActivation: [ :row | 
-							selectedRows add: row.
-						];
+					onActivation: [ :row | 
+						selectedRows add: row.
+					];
 					onDeactivation: [ :row | 
-							selectedRows remove: row.
-						]).
+						selectedRows remove: row.
+					]).
 	].
 
 	header doWithIndex: [ :headerColumn :headerIndex |
