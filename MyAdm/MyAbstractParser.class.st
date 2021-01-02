@@ -4,6 +4,9 @@ I am an abstract columns parser
 Class {
 	#name : #MyAbstractParser,
 	#superclass : #Object,
+	#instVars : [
+		'margins'
+	],
 	#category : #MyAdm
 }
 
@@ -35,11 +38,26 @@ MyAbstractParser >> data [
 
 ]
 
+{ #category : #accessing }
+MyAbstractParser >> dataLines: aLines [
+	"Returns data lines only, without margins (if they exist)"
+	| interval |
+	margins ifNil: [ ^ aLines ].
+	interval := margins dataLinesInterval: aLines.
+	^ interval ifNil: aLines ifNotNil: [ aLines copyFrom: interval first to: interval last ].
+]
+
 { #category : #testing }
 MyAbstractParser >> isEmpty [
 	"A flag: is any data rows"
 	self subclassResponsibility
 
+]
+
+{ #category : #accessing }
+MyAbstractParser >> margins: anObject [
+
+	margins := anObject
 ]
 
 { #category : #parsing }

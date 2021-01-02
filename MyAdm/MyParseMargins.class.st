@@ -25,15 +25,22 @@ MyParseMargins >> bottomSize: anObject [
 	bottomSize := anObject
 ]
 
-{ #category : #accessing }
-MyParseMargins >> data: aLines [
-	"Returns data lines without margins"
+{ #category : #utilities }
+MyParseMargins >> dataLinesInterval: aLines [
+	"Returns an interval of data lines only. If margins are bigger than all lines then returns nil.
+	If no data, returns nil too"
+	| topMarginLines bottomMarginLines |
+	topMarginLines := self findMargin: #top lines: aLines.
+	bottomMarginLines := self findMargin: #bottom lines: aLines.
+	topMarginLines >= aLines size ifTrue: [ ^ nil ].
+	bottomMarginLines >= aLines size ifTrue: [ ^ nil ].
 
+	^ Interval from: topMarginLines + 1 to: aLines size - bottomMarginLines.
 ]
 
 { #category : #utilities }
 MyParseMargins >> findBlockMargin: aMargin lines: aLines [
-	"Find the margin (aMargin is #top, #bottom) for lines list aLines"
+	"Finds the margin's lines number (aMargin is #top, #bottom) for lines list aLines"
 	| iter foundCheck lastLineCheck marginSize state isBlankLine isLastLine line marginLines |
 	marginSize := 0. state := #start.
 
@@ -54,7 +61,6 @@ MyParseMargins >> findBlockMargin: aMargin lines: aLines [
 		line := aLines at: iLine.
 		isBlankLine := line isEmpty or: (MyAbstractParser isBlankString: line).
 		isLastLine := lastLineCheck value: iLine.
-		Transcript show: iLine; tab; show: line; tab; show: isBlankLine; tab; show: isLastLine; cr.
 		"states processing"
 		state = #start ifTrue: [ state := isBlankLine ifTrue: [ #empty ] ifFalse: [ #filled ] ].
 		state = #empty ifTrue: [ isBlankLine ifFalse: [ state := #filled ] ].
@@ -64,6 +70,13 @@ MyParseMargins >> findBlockMargin: aMargin lines: aLines [
 				foundCheck value ifTrue: [ ^ marginLines value: iLine value: isLastLine ].
 				state := #empty ] ] ].
 	^ 0
+]
+
+{ #category : #utilities }
+MyParseMargins >> findMargin: aMargin lines: aLines [
+	^block
+		ifTrue: [ self findBlockMargin: aMargin lines: aLines ]
+	   ifFalse: [ aMargin = #top ifTrue: topSize ifFalse: bottomSize ]
 ]
 
 { #category : #initialization }
