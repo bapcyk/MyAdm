@@ -10,7 +10,8 @@ Class {
 		'exec',
 		'parser',
 		'presenterClass',
-		'presenter'
+		'presenter',
+		'session'
 	],
 	#category : #MyAdm
 }
@@ -25,6 +26,11 @@ MyAbstractCmd class >> newCmd: anExec [
 MyAbstractCmd >> help [
 	"Help string, should be overriden"
 	^ name
+]
+
+{ #category : #initialization }
+MyAbstractCmd >> initialize [
+	session := Dictionary new.
 ]
 
 { #category : #initialization }
@@ -79,4 +85,16 @@ MyAbstractCmd >> selectionAsArgs: aCmdName [
 	for one of it's sub-command with a name aCmdName"
 
 	self subclassResponsibility
+]
+
+{ #category : #accessing }
+MyAbstractCmd >> session [
+
+	^ session
+]
+
+{ #category : #accessing }
+MyAbstractCmd >> session: anObject [
+
+	session := anObject
 ]

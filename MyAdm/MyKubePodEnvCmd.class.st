@@ -22,7 +22,7 @@ MyKubePodEnvCmd >> initializeWithExec: anExec [
 		initializeWithName: 'POD Env'
 		subCmds: #()
 		exec: anExec
-		parser: (MyFlowParser new columnsDelim: $=; header: header)
+		parser: (MyRcParser new columnsDelim: $=; header: header)
 		presenter: MyTablePresenter
 
 ]

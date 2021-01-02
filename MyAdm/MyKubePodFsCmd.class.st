@@ -5,8 +5,7 @@ Class {
 	#name : #MyKubePodFsCmd,
 	#superclass : #MyAbstractCmd,
 	#instVars : [
-		'folder',
-		'pod'
+		'folder'
 	],
 	#category : #MyAdm
 }
@@ -48,7 +47,7 @@ MyKubePodFsCmd >> initializeWithExec: anExec [
 { #category : #utilities }
 MyKubePodFsCmd >> run: anArgs [
 	| theFolder |
-	pod := anArgs first.
+	session at: #pod put: anArgs first.
 	theFolder := folder ifNil: [ anArgs at: 2 ] ifNotNil: [ folder ].
 	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-it'. anArgs first. 'ls'. '--'. '-l'. theFolder. }
 
@@ -65,7 +64,7 @@ MyKubePodFsCmd >> selectionAsArgs: aCmdName [
 
 	^ sel
 		ifNotNil: [
-			{pod. (sel at: 1) at: 9}
+			{session at: #pod. (sel at: 1) at: 9}
 		]
 		ifNil: [ nil ]
 ]
