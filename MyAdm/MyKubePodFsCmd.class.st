@@ -31,13 +31,16 @@ MyKubePodFsCmd >> help [
 MyKubePodFsCmd >> initializeWithExec: anExec [
 
 	"Initializes the command with the executor instance anExec"
-
+	| margins header |
+	margins := MyParserMargins new topSize: 1.
+	header := #( 'mode' 'ln' 'user' 'grp' 'size' 'mon' 'day' 'time' 'name').
+	
 	self
 		initializeWithName: 'FS'
 		subCmds: #( )
 		exec: anExec
-		parser: MyPlainTextParser new
-		presenter: MyTextPresenter
+		parser: (MyAlignedColumnsParser new margins: margins; header: header; yourself)
+		presenter: MyTablePresenter
 
 ]
 
