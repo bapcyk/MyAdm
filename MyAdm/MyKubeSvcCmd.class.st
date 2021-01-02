@@ -21,7 +21,7 @@ MyKubeSvcCmd >> initializeWithExec: anExec [
 		initializeWithName: 'NS Services'
 		subCmds: { MyKubeSvcDetailsCmd newCmd: anExec. MyKubeSvcEndpointsCmd newCmd: anExec. }
 		exec: anExec
-		parser: (MyAlignedColumnsParser new headerless: false)
+		parser: MyAlignedColumnsParser new
 		presenter: MyTablePresenter
 
 ]

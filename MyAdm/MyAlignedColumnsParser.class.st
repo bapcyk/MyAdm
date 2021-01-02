@@ -127,8 +127,19 @@ MyAlignedColumnsParser >> header [
 ]
 
 { #category : #accessing }
-MyAlignedColumnsParser >> headerless: aBoolean [
-	headerless := aBoolean
+MyAlignedColumnsParser >> header: aHeader [
+
+	"Sets a new header aHeader which is a list of columns or replaces existing one"
+
+	headerless
+		ifTrue: [ items addFirst: aHeader. headerless := false ]
+		ifFalse: [ items at: 1 put: aHeader ]
+]
+
+{ #category : #initialization }
+MyAlignedColumnsParser >> initialize [
+	headerless := false.
+	items := #().
 ]
 
 { #category : #testing }
@@ -155,4 +166,9 @@ MyAlignedColumnsParser >> parse: aString [
 	items := plumb collectColumns: [ :rowNum :colNum :col | col ].
 
 
+]
+
+{ #category : #settings }
+MyAlignedColumnsParser >> withoutHeader [
+	headerless := true
 ]
