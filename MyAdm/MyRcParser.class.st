@@ -107,15 +107,15 @@ MyRcParser >> parse: aString [
 	lines := self splitLines: aString.
 	columnsDelim ifNil: [ columnsDelim := self class findColumnsDelim: lines ].
 	items := columnsDelim
-		ifNil: [ lines collect: [ :line | { line } ] ]
+		ifNil: [ lines collectWithIndex: [ :line :i | { 'VAR', i asString. line } ] ]
 		ifNotNil: [
-			lines collect: [ :line |
-				line splitOn: columnsDelim
-				]
-			].
+			lines collect: [ :line | line splitOn: columnsDelim ]
+			      thenReject: [ :line | line size ~= 2]
+		].
+
 	items := items collect: [ :row |
 		row collect: [ :col | self class trimColumn: col ]
-		].
+	].
 
 ]
 
