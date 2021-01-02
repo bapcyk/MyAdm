@@ -24,7 +24,8 @@ Class {
 	#superclass : #MyAbstractParser,
 	#instVars : [
 		'items',
-		'headerless'
+		'headerless',
+		'customHeader'
 	],
 	#category : #MyAdm
 }
@@ -88,7 +89,7 @@ MyAlignedColumnsParser >> data [
 	| rng |
 
 	rng := self dataRowsInterval.
-	^ items copyFrom: rng first to: rng last.
+	^ rng ifNotNil: [ items copyFrom: rng first to: rng last ] ifNil: [ nil ].
 
 ]
 
@@ -113,7 +114,11 @@ MyAlignedColumnsParser >> dataRowsNumber [
 
 { #category : #accessing }
 MyAlignedColumnsParser >> header [
+	
 	"Returns columns of the header"
+	
+	customHeader ifNotNil: [ ^ customHeader ].
+	
 	items isEmpty
 		ifTrue: [ ^ nil ]
 		ifFalse: [
@@ -129,11 +134,16 @@ MyAlignedColumnsParser >> header [
 { #category : #accessing }
 MyAlignedColumnsParser >> header: aHeader [
 
-	"Sets a new header aHeader which is a list of columns or replaces existing one"
+	"Sets a new header aHeader which is a list of columns (or nil - to disable headers)
+	or replaces existing one"
 
-	headerless
-		ifTrue: [ items addFirst: aHeader. headerless := false ]
-		ifFalse: [ items at: 1 put: aHeader ]
+	aHeader
+		ifNil: [
+			headerless := true.
+			customHeader := nil ]
+		ifNotNil: [ 
+			headerless := false.
+			customHeader := aHeader ]
 ]
 
 { #category : #initialization }
@@ -166,9 +176,4 @@ MyAlignedColumnsParser >> parse: aString [
 	items := plumb collectColumns: [ :rowNum :colNum :col | col ].
 
 
-]
-
-{ #category : #settings }
-MyAlignedColumnsParser >> withoutHeader [
-	headerless := true
 ]
