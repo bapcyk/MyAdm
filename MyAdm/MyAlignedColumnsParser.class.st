@@ -172,8 +172,14 @@ MyAlignedColumnsParser >> items: anItems [
 { #category : #parsing }
 MyAlignedColumnsParser >> parse: aString [
    | plumb |
-	plumb := MyParserPlumb withLines: (self class splitLines: aString).
+	plumb := MyParserPlumb withLines: (self splitLines: aString).
 	items := plumb collectColumns: [ :rowNum :colNum :col | col ].
 
 
+]
+
+{ #category : #utilities }
+MyAlignedColumnsParser >> splitLines: aString [
+	"Splits aString into lines and drops margins if they exist"
+	^ self dataLines: (self class splitLines: aString)
 ]

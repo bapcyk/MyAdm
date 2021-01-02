@@ -93,7 +93,7 @@ MyFlowParser >> isEmpty [
 { #category : #parsing }
 MyFlowParser >> parse: aString [
 	| lines |
-	lines := self class splitLines: aString.
+	lines := self splitLines: aString.
 	columnsDelim ifNil: [ columnsDelim := self class findColumnsDelim: lines ].
 	items := columnsDelim
 		ifNil: [ lines collect: [ :line | { line } ] ]
@@ -106,4 +106,10 @@ MyFlowParser >> parse: aString [
 		row collect: [ :col | self class trimColumn: col ]
 		].
 
+]
+
+{ #category : #utilities }
+MyFlowParser >> splitLines: aString [
+	"Splits aString into lines and drops margins if they exist"
+	^ self dataLines: (self class splitLines: aString)
 ]
