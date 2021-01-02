@@ -37,7 +37,7 @@ MyRcParser class >> splitLines: aString [
 
 { #category : #utilities }
 MyRcParser class >> trimColumn: aString [
-	^ aString trimBoth: [ :ch | Character separators, Character specialCharacters includes: ch ]
+	^ aString trimBoth: [ :ch | Character separators includes: ch ]
 ]
 
 { #category : #accessing }
