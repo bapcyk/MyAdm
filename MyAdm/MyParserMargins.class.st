@@ -2,7 +2,7 @@
 I am a margins (header, footer) cutter of lines
 "
 Class {
-	#name : #MyParseMargins,
+	#name : #MyParserMargins,
 	#superclass : #Object,
 	#instVars : [
 		'block',
@@ -13,20 +13,20 @@ Class {
 }
 
 { #category : #accessing }
-MyParseMargins >> block: aBoolean [
+MyParserMargins >> block: aBoolean [
 	"Sets the flag - margins are as blocks (not lines but lines delimited with empty lines)"
 	
 	block := aBoolean
 ]
 
 { #category : #accessing }
-MyParseMargins >> bottomSize: anObject [
+MyParserMargins >> bottomSize: anObject [
 
 	bottomSize := anObject
 ]
 
 { #category : #utilities }
-MyParseMargins >> dataLinesInterval: aLines [
+MyParserMargins >> dataLinesInterval: aLines [
 	"Returns an interval of data lines only. If margins are bigger than all lines then returns nil.
 	If no data, returns nil too"
 	| topMarginLines bottomMarginLines |
@@ -39,7 +39,7 @@ MyParseMargins >> dataLinesInterval: aLines [
 ]
 
 { #category : #utilities }
-MyParseMargins >> findBlockMargin: aMargin lines: aLines [
+MyParserMargins >> findBlockMargin: aMargin lines: aLines [
 	"Finds the margin's lines number (aMargin is #top, #bottom) for lines list aLines"
 	| iter foundCheck lastLineCheck marginSize state isBlankLine isLastLine line marginLines |
 	marginSize := 0. state := #start.
@@ -73,21 +73,21 @@ MyParseMargins >> findBlockMargin: aMargin lines: aLines [
 ]
 
 { #category : #utilities }
-MyParseMargins >> findMargin: aMargin lines: aLines [
+MyParserMargins >> findMargin: aMargin lines: aLines [
 	^block
 		ifTrue: [ self findBlockMargin: aMargin lines: aLines ]
 	   ifFalse: [ aMargin = #top ifTrue: topSize ifFalse: bottomSize ]
 ]
 
 { #category : #initialization }
-MyParseMargins >> initialize [
+MyParserMargins >> initialize [
 	block := false.
 	topSize := 0.
 	bottomSize := 0.
 ]
 
 { #category : #accessing }
-MyParseMargins >> topSize: anObject [
+MyParserMargins >> topSize: anObject [
 
 	topSize := anObject
 ]

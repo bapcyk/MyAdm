@@ -20,6 +20,7 @@ MyKubePodsCmd >> initializeWithExec: anExec [
 	self
 		initializeWithName: 'NS Pods'
 		subCmds: { 
+				(MyKubePodFsCmd newCmd: anExec) folder: '/'.
 				MyKubePodYamlCmd newCmd: anExec.
 				MyKubeSvcCmd newCmd: anExec.
 				MyKubeSecretsCmd newCmd: anExec.
