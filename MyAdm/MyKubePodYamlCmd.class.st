@@ -9,7 +9,7 @@ Class {
 
 { #category : #accessing }
 MyKubePodYamlCmd >> help [
-	^ 'Get POD YAML'
+	^ 'POD YAML'
 ]
 
 { #category : #initialization }

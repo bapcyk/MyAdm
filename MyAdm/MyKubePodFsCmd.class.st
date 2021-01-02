@@ -36,7 +36,7 @@ MyKubePodFsCmd >> initializeWithExec: anExec [
 	header := #( 'MODE' 'LN' 'USER' 'GRP' 'SIZE' 'MONTH' 'DAY' 'YEAR/TIME' 'NAME').
 	
 	self
-		initializeWithName: 'FS'
+		initializeWithName: 'File System'
 		subCmds: {self} "{ MyKubePodFsCmd newCmd: anExec }"
 		exec: anExec
 		parser: (MyAlignedColumnsParser new margins: margins; header: header; yourself)

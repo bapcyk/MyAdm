@@ -18,7 +18,7 @@ MyKubePodsCmd >> initializeWithExec: anExec [
 	"Initializes the command with the executor instance anExec"
 
 	self
-		initializeWithName: 'NS Pods'
+		initializeWithName: 'NS PODs'
 		subCmds: { 
 				(MyKubePodFsCmd newCmd: anExec) folder: '/'.
 				MyKubePodEnvCmd newCmd: anExec.

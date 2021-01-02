@@ -19,7 +19,7 @@ MyKubePodEnvCmd >> initializeWithExec: anExec [
 	header := #('NAME' 'VALUE').
 
 	self
-		initializeWithName: 'POD Env'
+		initializeWithName: 'POD Environment'
 		subCmds: #()
 		exec: anExec
 		parser: (MyRcParser new columnsDelim: $=; header: header)

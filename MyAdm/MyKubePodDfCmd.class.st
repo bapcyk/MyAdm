@@ -9,14 +9,14 @@ Class {
 
 { #category : #accessing }
 MyKubePodDfCmd >> help [
-	^ 'POD df'
+	^ 'POD disk (mount points) usage'
 ]
 
 { #category : #initialization }
 MyKubePodDfCmd >> initializeWithExec: anExec [
 	"Initializes the command with the executor instance anExec"
 	self
-		initializeWithName: 'POD df'
+		initializeWithName: 'POD Disk'
 		subCmds: #()
 		exec: anExec
 		parser: MyAlignedColumnsParser new
