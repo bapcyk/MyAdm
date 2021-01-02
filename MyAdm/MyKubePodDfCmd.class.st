@@ -1,33 +1,23 @@
 "
-I am a command 'kubectl get pod'
+I am a `kubectl exec -it <POD> df` command
 "
 Class {
-	#name : #MyKubePodsCmd,
+	#name : #MyKubePodDfCmd,
 	#superclass : #MyAbstractCmd,
 	#category : #MyAdm
 }
 
 { #category : #accessing }
-MyKubePodsCmd >> help [
-	^ 'Get current namespace PODs'
+MyKubePodDfCmd >> help [
+	^ 'POD df'
 ]
 
 { #category : #initialization }
-MyKubePodsCmd >> initializeWithExec: anExec [
-
+MyKubePodDfCmd >> initializeWithExec: anExec [
 	"Initializes the command with the executor instance anExec"
-
 	self
-		initializeWithName: 'NS Pods'
-		subCmds: { 
-				(MyKubePodFsCmd newCmd: anExec) folder: '/'.
-				MyKubePodEnvCmd newCmd: anExec.
-				MyKubePodDfCmd newCmd: anExec.				
-				MyKubePodYamlCmd newCmd: anExec.
-				MyKubeSvcCmd newCmd: anExec.
-				MyKubeSecretsCmd newCmd: anExec.
-				MyKubeDescribePodCmd newCmd: anExec.
-		}
+		initializeWithName: 'POD df'
+		subCmds: #()
 		exec: anExec
 		parser: MyAlignedColumnsParser new
 		presenter: MyTablePresenter
@@ -35,14 +25,14 @@ MyKubePodsCmd >> initializeWithExec: anExec [
 ]
 
 { #category : #utilities }
-MyKubePodsCmd >> run: anArgs [
-	"Ignores all arguments because it does not require them"
-	^ exec exec: '<REMOTE-BIN>/kubectl get pod'
+MyKubePodDfCmd >> run: anArgs [
+
+	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-it'. anArgs first. 'df'. }
 
 ]
 
 { #category : #utilities }
-MyKubePodsCmd >> selectionAsArgs: aCmdName [
+MyKubePodDfCmd >> selectionAsArgs: aCmdName [
 
 	"Prepares arguments from the selected results item (table columns list) of this command
 	for one of it's sub-command with a name aCmdName"

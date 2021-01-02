@@ -24,7 +24,8 @@ Class {
 	#superclass : #MyAbstractParser,
 	#instVars : [
 		'items',
-		'columnsDelim'
+		'columnsDelim',
+		'header'
 	],
 	#category : #MyAdm
 }
@@ -83,6 +84,23 @@ MyFlowParser >> columnsDelim: anObject [
 MyFlowParser >> data [
 	^ items
 
+]
+
+{ #category : #accessing }
+MyFlowParser >> header [
+
+	^ header
+]
+
+{ #category : #accessing }
+MyFlowParser >> header: anObject [
+
+	header := anObject
+]
+
+{ #category : #initialization }
+MyFlowParser >> initialize [
+	header := #().
 ]
 
 { #category : #testing }

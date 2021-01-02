@@ -5,7 +5,8 @@ Class {
 	#name : #MyKubePodFsCmd,
 	#superclass : #MyAbstractCmd,
 	#instVars : [
-		'folder'
+		'folder',
+		'pod'
 	],
 	#category : #MyAdm
 }
@@ -33,11 +34,11 @@ MyKubePodFsCmd >> initializeWithExec: anExec [
 	"Initializes the command with the executor instance anExec"
 	| margins header |
 	margins := MyParserMargins new topSize: 1.
-	header := #( 'mode' 'ln' 'user' 'grp' 'size' 'mon' 'day' 'time' 'name').
+	header := #( 'MODE' 'LN' 'USER' 'GRP' 'SIZE' 'MONTH' 'DAY' 'YEAR/TIME' 'NAME').
 	
 	self
 		initializeWithName: 'FS'
-		subCmds: #( )
+		subCmds: {self} "{ MyKubePodFsCmd newCmd: anExec }"
 		exec: anExec
 		parser: (MyAlignedColumnsParser new margins: margins; header: header; yourself)
 		presenter: MyTablePresenter
@@ -47,6 +48,7 @@ MyKubePodFsCmd >> initializeWithExec: anExec [
 { #category : #utilities }
 MyKubePodFsCmd >> run: anArgs [
 	| theFolder |
+	pod := anArgs first.
 	theFolder := folder ifNil: [ anArgs at: 2 ] ifNotNil: [ folder ].
 	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-it'. anArgs first. 'ls'. '--'. '-l'. theFolder. }
 
@@ -61,6 +63,9 @@ MyKubePodFsCmd >> selectionAsArgs: aCmdName [
 	| sel |
 	sel := presenter selection.
 
-	"If there is a selection, then it is a just selected text"
-	^ sel ifNotNil: [ {sel} ] ifNil: [ nil ]
+	^ sel
+		ifNotNil: [
+			{pod. (sel at: 1) at: 9}
+		]
+		ifNil: [ nil ]
 ]
