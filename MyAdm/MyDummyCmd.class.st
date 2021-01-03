@@ -5,7 +5,8 @@ Class {
 	#name : #MyDummyCmd,
 	#superclass : #MyAbstractCmd,
 	#instVars : [
-		'action'
+		'action',
+		'requiredSelectionSize'
 	],
 	#category : #MyAdm
 }
@@ -44,6 +45,18 @@ MyDummyCmd >> name: aName [
 	name := aName.
 ]
 
+{ #category : #accessing }
+MyDummyCmd >> requiredSelectionSize [
+
+	^ requiredSelectionSize
+]
+
+{ #category : #accessing }
+MyDummyCmd >> requiredSelectionSize: anObject [
+
+	requiredSelectionSize := anObject
+]
+
 { #category : #utilities }
 MyDummyCmd >> run: anArgs [
 	"If runAction is set then executes it otherwise returns anArgs as is"
@@ -53,12 +66,7 @@ MyDummyCmd >> run: anArgs [
 
 { #category : #utilities }
 MyDummyCmd >> selectionAsArgs: aCmdName [
-	"Prepares arguments from the selected results item (table columns list) of this command
-	for one of it's sub-command with a name aCmdName"
-
 	| sel |
 	sel := presenter selection.
-
-	"If there is a selection, then it is a list of columns, so we return the first column - the name of the POD"
-	^ sel ifNotNil: [ sel first ] ifNil: [ nil ]
+	^ sel ifNotNil: [ sel ]
 ]

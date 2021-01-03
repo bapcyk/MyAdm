@@ -11,7 +11,7 @@ Class {
 		'parser',
 		'presenterClass',
 		'presenter',
-		'session'
+		'context'
 	],
 	#category : #MyAdm
 }
@@ -23,6 +23,18 @@ MyAbstractCmd class >> newCmd: anExec [
 ]
 
 { #category : #accessing }
+MyAbstractCmd >> context [
+
+	^ context
+]
+
+{ #category : #accessing }
+MyAbstractCmd >> context: anObject [
+
+	context := anObject
+]
+
+{ #category : #accessing }
 MyAbstractCmd >> help [
 	"Help string, should be overriden"
 	^ name
@@ -30,7 +42,8 @@ MyAbstractCmd >> help [
 
 { #category : #initialization }
 MyAbstractCmd >> initialize [
-	session := Dictionary new.
+	context := Dictionary new.
+
 ]
 
 { #category : #initialization }
@@ -55,6 +68,13 @@ MyAbstractCmd >> initializeWithName: aName subCmds: aCmds exec: anExec parser: a
 { #category : #accesing }
 MyAbstractCmd >> name [
 	^ name
+]
+
+{ #category : #accessing }
+MyAbstractCmd >> requiredSelectionSize [
+	"The size of the selection (string size, rows number, etc) which is required for the
+	command to be allowed and relevant"
+	^ 0
 ]
 
 { #category : #utilities }
@@ -85,16 +105,4 @@ MyAbstractCmd >> selectionAsArgs: aCmdName [
 	for one of it's sub-command with a name aCmdName"
 
 	self subclassResponsibility
-]
-
-{ #category : #accessing }
-MyAbstractCmd >> session [
-
-	^ session
-]
-
-{ #category : #accessing }
-MyAbstractCmd >> session: anObject [
-
-	session := anObject
 ]

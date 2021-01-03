@@ -44,10 +44,15 @@ MyKubePodFsCmd >> initializeWithExec: anExec [
 
 ]
 
+{ #category : #accessing }
+MyKubePodFsCmd >> requiredSelectionSize [
+	^ 1
+]
+
 { #category : #utilities }
 MyKubePodFsCmd >> run: anArgs [
 	| theFolder |
-	session at: #pod put: anArgs first.
+	context at: #pod put: anArgs first.
 	theFolder := folder ifNil: [ anArgs at: 2 ] ifNotNil: [ folder ].
 	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-it'. anArgs first. 'ls'. '--'. '-l'. theFolder. }
 
@@ -55,16 +60,7 @@ MyKubePodFsCmd >> run: anArgs [
 
 { #category : #utilities }
 MyKubePodFsCmd >> selectionAsArgs: aCmdName [
-
-	"Prepares arguments from the selected results item (table columns list) of this command
-	for one of it's sub-command with a name aCmdName"
-
 	| sel |
 	sel := presenter selection.
-
-	^ sel
-		ifNotNil: [
-			{session at: #pod. (sel at: 1) at: 9}
-		]
-		ifNil: [ nil ]
+	^ sel ifNotNil: [ sel first ]
 ]

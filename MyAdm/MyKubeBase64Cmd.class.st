@@ -26,6 +26,11 @@ MyKubeBase64Cmd >> initializeWithExec: anExec [
 
 ]
 
+{ #category : #accessing }
+MyKubeBase64Cmd >> requiredSelectionSize [
+	^ 1
+]
+
 { #category : #utilities }
 MyKubeBase64Cmd >> run: anArgs [
 
@@ -35,13 +40,7 @@ MyKubeBase64Cmd >> run: anArgs [
 
 { #category : #utilities }
 MyKubeBase64Cmd >> selectionAsArgs: aCmdName [
-
-	"Prepares arguments from the selected results item (table columns list) of this command
-	for one of it's sub-command with a name aCmdName"
-
 	| sel |
 	sel := presenter selection.
-
-	"If there is a selection, then it is a just selected text"
-	^ sel ifNotNil: [ {sel} ] ifNil: [ nil ]
+	^ sel ifNotNil: [ sel ]
 ]

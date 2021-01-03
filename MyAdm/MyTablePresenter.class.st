@@ -47,9 +47,7 @@ MyTablePresenter >> initializeWithParser: aParser cmds: aCmds forCmd: aCmd [
 { #category : #accessing }
 MyTablePresenter >> selection [
 	"Returns selection as a list of strings"
-	| singleSelection |
-	singleSelection := selectedRows ifEmpty: [ nil ] ifNotEmpty: [ selectedRows first ].
-	^ { singleSelection }
+	^ selectedRows ifEmpty: [ nil ] ifNotEmpty: [ selectedRows ].
 
 ]
 
@@ -60,8 +58,6 @@ MyTablePresenter >> updatePresenter [
 
 	data ifEmpty: [ ^ self ].
 
-	super updatePresenter.
-
 	columnAs := [ :iCol :row | row at: iCol ].
 	table items: data.
 
@@ -69,9 +65,11 @@ MyTablePresenter >> updatePresenter [
 		table addColumn: ((SpCheckBoxTableColumn title: ' ' evaluated: [ :row | false ]) width: 20;
 					onActivation: [ :row | 
 						selectedRows add: row.
+						self onSelectionChanged.
 					];
 					onDeactivation: [ :row | 
 						selectedRows remove: row.
+						self onSelectionChanged.
 					]).
 	].
 
@@ -80,5 +78,8 @@ MyTablePresenter >> updatePresenter [
 				(SpStringTableColumn title: headerColumn evaluated: [ :row | columnAs value: headerIndex value: row ])
 				width: headerColumn size * 10; beExpandable)
 	].
+
+	super updatePresenter.
+
 
 ]

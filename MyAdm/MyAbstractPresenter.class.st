@@ -58,9 +58,21 @@ MyAbstractPresenter >> onCmd: aCmdName event: anEvent button: aButton [
 	^ cmd runUI: args
 ]
 
+{ #category : #actions }
+MyAbstractPresenter >> onSelectionChanged [
+	"Should be called by successor-presenter to update buttons states"
+	| selSize |
+	selSize := self selection ifNil: [ 0 ] ifNotNil: [ self selection size ].
+	1 to: cmds size do: [ :i |
+		(cmds at: i) requiredSelectionSize <= selSize
+			ifTrue: [ (toolbar items at: i) enable ]
+			ifFalse: [ (toolbar items at: i) disable ]
+	].
+]
+
 { #category : #accessing }
 MyAbstractPresenter >> selection [
-	"Returns selection as a list of strings"
+	"Returns selection as a list of items (chars, lists, etc - depends on the concrete presenter)"
 	self subclassResponsibility
 ]
 
@@ -71,6 +83,7 @@ MyAbstractPresenter >> title [
 
 { #category : #initialization }
 MyAbstractPresenter >> updatePresenter [
+	"Successors must call it (`super updatePresenter`) after own implementation"
 
 	cmds do: [ :cmd | 
 		| btn |
@@ -79,7 +92,9 @@ MyAbstractPresenter >> updatePresenter [
 			       action: [];
 			       help: cmd help.
 		toolbar addItem: btn.
-		btn eventHandler whenMouseDownDo: [ :ev | self onCmd: cmd name event: ev button: btn ] ]
+		btn eventHandler whenMouseDownDo: [ :ev | self onCmd: cmd name event: ev button: btn ] ].
+
+	self onSelectionChanged.
 
 ]
 

@@ -27,6 +27,11 @@ MyKubePodEnvCmd >> initializeWithExec: anExec [
 
 ]
 
+{ #category : #accessing }
+MyKubePodEnvCmd >> requiredSelectionSize [
+	^ 1
+]
+
 { #category : #utilities }
 MyKubePodEnvCmd >> run: anArgs [
 
@@ -36,14 +41,7 @@ MyKubePodEnvCmd >> run: anArgs [
 
 { #category : #utilities }
 MyKubePodEnvCmd >> selectionAsArgs: aCmdName [
-
-	"Prepares arguments from the selected results item (table columns list) of this command
-	for one of it's sub-command with a name aCmdName"
-
 	| sel |
 	sel := presenter selection.
-
-	"If there is a selection, then it is a list of columns, so we return the first column - the name of the POD"
-	(sel isNil or: sel first isNil) ifTrue: [ ^ nil ].
-	^ {sel first first}
+	^ sel ifNotNil: [ sel first ]
 ]

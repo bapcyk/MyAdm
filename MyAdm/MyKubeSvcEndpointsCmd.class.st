@@ -26,6 +26,11 @@ MyKubeSvcEndpointsCmd >> initializeWithExec: anExec [
 
 ]
 
+{ #category : #accessing }
+MyKubeSvcEndpointsCmd >> requiredSelectionSize [
+	^ 1
+]
+
 { #category : #utilities }
 MyKubeSvcEndpointsCmd >> run: anArgs [
 
@@ -35,13 +40,7 @@ MyKubeSvcEndpointsCmd >> run: anArgs [
 
 { #category : #utilities }
 MyKubeSvcEndpointsCmd >> selectionAsArgs: aCmdName [
-
-	"Prepares arguments from the selected results item (table columns list) of this command
-	for one of it's sub-command with a name aCmdName"
-
 	| sel |
 	sel := presenter selection.
-
-	"If there is a selection, then it is a just selected text"
-	^ sel ifNotNil: [ {sel} ] ifNil: [ nil ]
+	^ sel ifNotNil: [ sel ]
 ]

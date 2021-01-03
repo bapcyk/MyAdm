@@ -52,8 +52,7 @@ MyTextPresenter >> updatePresenter [
 
 	data ifEmpty: [ ^ self ].
 
-	super updatePresenter.
-
 	text text: data asString trim.
 
+	super updatePresenter.
 ]

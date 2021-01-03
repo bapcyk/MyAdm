@@ -26,6 +26,11 @@ MyKubeDescribeSecretCmd >> initializeWithExec: anExec [
 
 ]
 
+{ #category : #accessing }
+MyKubeDescribeSecretCmd >> requiredSelectionSize [
+	^ 1
+]
+
 { #category : #utilities }
 MyKubeDescribeSecretCmd >> run: anArgs [
 
@@ -34,13 +39,7 @@ MyKubeDescribeSecretCmd >> run: anArgs [
 
 { #category : #utilities }
 MyKubeDescribeSecretCmd >> selectionAsArgs: aCmdName [
-
-	"Prepares arguments from the selected results item (table columns list) of this command
-	for one of it's sub-command with a name aCmdName"
-
 	| sel |
 	sel := presenter selection.
-
-	"If there is a selection, then it is a just selected text"
-	^ sel ifNotNil: [ {sel} ] ifNil: [ nil ]
+	^ sel ifNotNil: [ sel ]
 ]
