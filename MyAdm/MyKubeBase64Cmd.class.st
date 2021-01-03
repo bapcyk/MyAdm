@@ -34,7 +34,7 @@ MyKubeBase64Cmd >> requiredSelectionSize [
 { #category : #utilities }
 MyKubeBase64Cmd >> run: anArgs [
 
-	^ anArgs first first base64Decoded.
+	^ anArgs first base64Decoded.
 
 ]
 
