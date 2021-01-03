@@ -61,7 +61,6 @@ MyKubePodFsCmd >> runUI: anArgs [
 	self context at: #dir put: (self class joinPath: dirStack to: dir).
 	self context at: #pod put: anArgs first.
 	subCmds replaceAll: self with: clone.
-	Transcript show: anArgs; tab; show: context; cr.
 	^ super runUI: anArgs
 ]
 
