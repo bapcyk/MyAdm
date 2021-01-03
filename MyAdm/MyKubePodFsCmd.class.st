@@ -4,22 +4,14 @@ I am a `kubectl exec -it <POD> ls -- -l <DIR>` command
 Class {
 	#name : #MyKubePodFsCmd,
 	#superclass : #MyAbstractCmd,
-	#instVars : [
-		'folder'
-	],
 	#category : #MyAdm
 }
 
-{ #category : #accessing }
-MyKubePodFsCmd >> folder [
-
-	^ folder
-]
-
-{ #category : #accessing }
-MyKubePodFsCmd >> folder: anObject [
-
-	folder := anObject
+{ #category : #utilities }
+MyKubePodFsCmd class >> joinPath: aPath1 to: aPath2 [
+	^ aPath1 ifEmpty: [ aPath2 ]
+	         ifNotEmpty: [
+					aPath1 last = $/ ifTrue: [ aPath1, aPath2 ] ifFalse: [ aPath1, '/', aPath2 ] ]
 ]
 
 { #category : #accessing }
@@ -37,9 +29,9 @@ MyKubePodFsCmd >> initializeWithExec: anExec [
 	
 	self
 		initializeWithName: 'File System'
-		subCmds: {self} "{ MyKubePodFsCmd newCmd: anExec }"
+		subCmds: { self }
 		exec: anExec
-		parser: (MyAlignedColumnsParser new margins: margins; header: header; yourself)
+		parser: (MyAlignedColumnsParser new margins: margins; header: header)
 		presenter: MyTablePresenter
 
 ]
@@ -51,16 +43,36 @@ MyKubePodFsCmd >> requiredSelectionSize [
 
 { #category : #utilities }
 MyKubePodFsCmd >> run: anArgs [
-	| theFolder |
-	context at: #pod put: anArgs first.
-	theFolder := folder ifNil: [ anArgs at: 2 ] ifNotNil: [ folder ].
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-it'. anArgs first. 'ls'. '--'. '-l'. theFolder. }
+	| pod dir |
+	pod := anArgs first.
+	dir := anArgs second.
+	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-it'. pod. 'ls'. '--'. '-l'. dir. }
 
+]
+
+{ #category : #running }
+MyKubePodFsCmd >> runUI: anArgs [
+
+	| clone dir dirStack |
+	
+	clone := self cloneMe.
+	dirStack := clone context at: #dir ifAbsent: ''.
+	dir := anArgs second.
+	self context at: #dir put: (self class joinPath: dirStack to: dir).
+	self context at: #pod put: anArgs first.
+	subCmds replaceAll: self with: clone.
+	Transcript show: anArgs; tab; show: context; cr.
+	^ super runUI: anArgs
 ]
 
 { #category : #utilities }
 MyKubePodFsCmd >> selectionAsArgs: aCmdName [
-	| sel |
+
+	| sel fsEntry |
 	sel := presenter selection.
-	^ sel ifNotNil: [ sel first ]
+	^ sel ifNotNil: [
+		fsEntry := (sel at: 1) at: 9.
+		fsEntry := (fsEntry splitOn: ' -> ') first. 
+		{ self context at: #pod. self class joinPath: (self context at: #dir) to: fsEntry }
+	]
 ]

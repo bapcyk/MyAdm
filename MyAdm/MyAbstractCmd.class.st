@@ -22,6 +22,22 @@ MyAbstractCmd class >> newCmd: anExec [
 	^ self new initializeWithExec: anExec
 ]
 
+{ #category : #creating }
+MyAbstractCmd >> cloneMe [
+
+	"Clones itself as a new object"
+
+	| clone |
+	clone := self class new
+		         initializeWithName: name
+		         subCmds: subCmds
+		         exec: exec
+		         parser: parser
+		         presenter: presenterClass.
+	clone context: context deepCopy.
+	^ clone
+]
+
 { #category : #accessing }
 MyAbstractCmd >> context [
 
@@ -32,6 +48,12 @@ MyAbstractCmd >> context [
 MyAbstractCmd >> context: anObject [
 
 	context := anObject
+]
+
+{ #category : #accessing }
+MyAbstractCmd >> contextAt: aKey put: aValue [
+	"Puts aValue under the aKey. Returns self, not added aValue as a usual!!!"
+	context at: aKey put: aValue
 ]
 
 { #category : #accessing }
@@ -80,7 +102,9 @@ MyAbstractCmd >> requiredSelectionSize [
 { #category : #utilities }
 MyAbstractCmd >> run: anArgs [
 	"Runs command passed as arguments list. Returns the result as a WideString.
-	It must form a command like #('ls' '/tmp') from anArgs like #('/tmp')
+	It must form a command like #('ls' '/tmp') from anArgs like #('/tmp').
+	Typical implementation is an execution with `exec`, but others are possible too.
+	The implementation should not change the state of the command.
 	"
 	self subclassResponsibility
 

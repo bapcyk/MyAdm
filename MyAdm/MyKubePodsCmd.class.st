@@ -20,7 +20,7 @@ MyKubePodsCmd >> initializeWithExec: anExec [
 	self
 		initializeWithName: 'NS PODs'
 		subCmds: { 
-				(MyKubePodFsCmd newCmd: anExec) folder: '/'.
+				MyKubePodFsCmd newCmd: anExec.
 				MyKubePodEnvCmd newCmd: anExec.
 				MyKubePodDfCmd newCmd: anExec.				
 				MyKubePodYamlCmd newCmd: anExec.
@@ -45,5 +45,9 @@ MyKubePodsCmd >> run: anArgs [
 MyKubePodsCmd >> selectionAsArgs: aCmdName [
 	| sel |
 	sel := presenter selection.
-	^ sel ifNotNil: [ sel first ]
+	^ sel ifNotNil: [
+		aCmdName = 'File System'
+			ifTrue: [ { sel first first. '/' } ]
+			ifFalse: [ sel first ]
+	]
 ]
