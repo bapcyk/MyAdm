@@ -53,7 +53,10 @@ MyKubePodFsCmd >> initializeWithExec: anExec [
 	
 	self
 		initializeWithName: 'File System'
-		subCmds: { self }
+		subCmds: {
+			self.
+			MyKubeCatCmd newCmd: anExec.
+		}
 		exec: anExec
 		parser: (MyAlignedColumnsParser new margins: margins; header: header)
 		presenter: MyTablePresenter
