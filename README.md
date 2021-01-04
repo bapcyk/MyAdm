@@ -1,5 +1,7 @@
 # MyAdm - Visual scripts for devops
 
+<img src="Screens/screen1.png">
+
 ## Usage
 
 Open Playground and run some visual scripts set (all of them are successors of the `MyAbstractScript`):
