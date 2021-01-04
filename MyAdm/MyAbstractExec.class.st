@@ -35,12 +35,15 @@ MyAbstractExec >> argsAsString: anArgs [
 		  joinUsing: ' '
 ]
 
+{ #category : #converting }
+MyAbstractExec >> decode: aString [
+	^ encoding ifNil: [ aString ] ifNotNil: [ aString convertFromEncoding: encoding ].
+]
+
 { #category : #utilities }
 MyAbstractExec >> doExecString: aString [
 	"Calls successor's execString implementation"
-	| encString |
-	encString := aString convertFromEncoding: encoding.
-	^ (self execString: encString) convertFromEncoding: encoding.
+	^ self decode: (self execString: (self decode: aString)).
 	
 ]
 
