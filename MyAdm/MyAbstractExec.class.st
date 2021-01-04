@@ -14,12 +14,11 @@ Class {
 
 { #category : #utilities }
 MyAbstractExec class >> quoteArg: anArg [
-
 	"Quotes anArg when it's required"
-
+	
 	^ (anArg includesAny: {Character space. Character tab})
-		  ifTrue: [ '"' , anArg , '"' ]
-		  ifFalse: anArg
+		ifTrue: [ '"' , anArg , '"' ]
+		ifFalse: anArg.
 ]
 
 { #category : #utilities }
@@ -27,12 +26,7 @@ MyAbstractExec >> argsAsString: anArgs [
 
 	"Converts anArgs to a string"
 
-	| condQuote |
-	condQuote := quote ifTrue: [ [ :s | self class quoteArg: s ] ] ifFalse: [ [ :s | s ] ].
-	^ (anArgs collect: [ :arg |
-		   condQuote value:
-			   (arg copyWithRegex: '"' matchesReplacedWith: '\"') ]) 
-		  joinUsing: ' '
+	^ (anArgs collect: [ :arg | self quoteArgIfNeeded: arg ]) joinUsing: ' '
 ]
 
 { #category : #converting }
@@ -101,6 +95,18 @@ MyAbstractExec >> quote [
 MyAbstractExec >> quote: anObject [
 
 	quote := anObject
+]
+
+{ #category : #utilities }
+MyAbstractExec >> quoteArgIfNeeded: anArg [
+	"Quotes an argument if it's needed"
+	| alreadyQuoted quoteNeeded |
+
+	alreadyQuoted := (anArg beginsWith: '''') or: (anArg beginsWith: '"').
+	quoteNeeded := quote and: (alreadyQuoted not).
+
+	^ quoteNeeded ifTrue: [ self class quoteArg: anArg ] ifFalse: [ anArg ].
+
 ]
 
 { #category : #utilities }
