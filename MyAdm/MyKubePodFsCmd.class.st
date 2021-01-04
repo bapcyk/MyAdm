@@ -83,13 +83,10 @@ MyKubePodFsCmd >> run: anArgs [
 { #category : #running }
 MyKubePodFsCmd >> runUI: anArgs [
 
-	| clone dir dirStack |
+	| clone dir |
 	
 	clone := self cloneMe.
-	dirStack := clone context at: #dir ifAbsent: ''.
 	dir := anArgs second.
-	"self context at: #dir put: (self class joinPath: dirStack to: dir)."
-	"self changeTopDir: dir."
 	dir = '/'
 		ifTrue: [ self pushDir: '' ]
 		ifFalse: 	[ self context at: #dir put: (dir splitOn: '/') ].

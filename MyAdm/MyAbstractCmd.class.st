@@ -114,9 +114,16 @@ MyAbstractCmd >> run: anArgs [
 { #category : #running }
 MyAbstractCmd >> runUI: anArgs [
 	"The same as run method but returns the result in UI"
-	| res |
+	| parseFailed res |
+	parseFailed := false.
 	res := self run: anArgs.
-	parser parse: res.
+	
+	[ parser parse: res ] on: Error do: [ parseFailed := true ].
+	parser data ifNil: [ parseFailed := true ].
+	parseFailed ifTrue: [
+		^ self inform: 'No valid data, just ''', (res trim truncateWithElipsisTo: 34), ''''
+		].
+	
 	presenter := presenterClass new.
 	presenter windowTitle: (extTitle ifNil: [ name ] ifNotNil: [ name, ': ', extTitle ]).
 	presenter openWithSpec.
