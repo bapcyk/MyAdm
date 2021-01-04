@@ -96,6 +96,7 @@ MyKubePodFsCmd >> runUI: anArgs [
 	dirStack := clone context at: #dir ifAbsent: ''.
 	dir := anArgs second.
 	"self context at: #dir put: (self class joinPath: dirStack to: dir)."
+	presenterTitle := dir.
 	self changeTopDir: dir.
 	self context at: #pod put: anArgs first.
 	subCmds replaceAll: self with: clone.
