@@ -22,7 +22,8 @@ MyKubePodsCmd >> initializeWithExec: anExec [
 		subCmds: { 
 				MyKubePodFsCmd newCmd: anExec.
 				MyKubePodEnvCmd newCmd: anExec.
-				MyKubePodDfCmd newCmd: anExec.				
+				MyKubePodDfCmd newCmd: anExec.
+				MyKubePodTopCmd newCmd: anExec.				
 				MyKubePodYamlCmd newCmd: anExec.
 				MyKubeSvcCmd newCmd: anExec.
 				MyKubeSecretsCmd newCmd: anExec.
