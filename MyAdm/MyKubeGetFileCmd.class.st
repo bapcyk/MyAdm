@@ -1,3 +1,6 @@
+"
+I am a `kubectl exec -it <POD> gzip -- -c <PATH>` command
+"
 Class {
 	#name : #MyKubeGetFileCmd,
 	#superclass : #MyAbstractCmd,
