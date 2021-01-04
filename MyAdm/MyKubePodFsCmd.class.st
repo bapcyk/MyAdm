@@ -14,6 +14,37 @@ MyKubePodFsCmd class >> joinPath: aPath1 to: aPath2 [
 					aPath1 last = $/ ifTrue: [ aPath1, aPath2 ] ifFalse: [ aPath1, '/', aPath2 ] ]
 ]
 
+{ #category : #'changing state' }
+MyKubePodFsCmd >> changeTopDir: aDirName [
+	"Changes the top of the directories stack"
+	| dirs |
+	dirs := self dirs.
+	dirs ifEmpty: [ dirs add: aDirName ] ifNotEmpty: [ dirs at: dirs size put: aDirName ].
+]
+
+{ #category : #accessing }
+MyKubePodFsCmd >> dirString [
+	"Returns the current dir as a full path string"
+	| d |
+	d := $/ join: self dirs.
+	^ d ifEmpty: [ '/' ].
+]
+
+{ #category : #utilities }
+MyKubePodFsCmd >> dirString: aNewDir [
+	"Returns a new full path - a join of my dir stack and aNewDir"
+	| d theNewDir |
+	theNewDir := aNewDir trimBoth: [ :ch | ch = $/ ].
+	d := $/ join: self dirs.
+	^ d ifEmpty: [ '/', theNewDir ] ifNotEmpty: [ d, '/', theNewDir ].
+]
+
+{ #category : #accessing }
+MyKubePodFsCmd >> dirs [
+	"The current dirs stack in the context (#dir in the `context`)"
+	^ context at: #dir ifAbsentPut: OrderedCollection new.
+]
+
 { #category : #accessing }
 MyKubePodFsCmd >> help [
 	^ 'Browse POD file system'
@@ -34,6 +65,12 @@ MyKubePodFsCmd >> initializeWithExec: anExec [
 		parser: (MyAlignedColumnsParser new margins: margins; header: header)
 		presenter: MyTablePresenter
 
+]
+
+{ #category : #'changing state' }
+MyKubePodFsCmd >> pushDir: aDirName [
+	"Pushes a new directory name to the dirs stack"
+	self dirs add: aDirName
 ]
 
 { #category : #accessing }
@@ -58,7 +95,8 @@ MyKubePodFsCmd >> runUI: anArgs [
 	clone := self cloneMe.
 	dirStack := clone context at: #dir ifAbsent: ''.
 	dir := anArgs second.
-	self context at: #dir put: (self class joinPath: dirStack to: dir).
+	"self context at: #dir put: (self class joinPath: dirStack to: dir)."
+	self changeTopDir: dir.
 	self context at: #pod put: anArgs first.
 	subCmds replaceAll: self with: clone.
 	^ super runUI: anArgs
@@ -72,6 +110,6 @@ MyKubePodFsCmd >> selectionAsArgs: aCmdName [
 	^ sel ifNotNil: [
 		fsEntry := (sel at: 1) at: 9.
 		fsEntry := (fsEntry splitOn: ' -> ') first. 
-		{ self context at: #pod. self class joinPath: (self context at: #dir) to: fsEntry }
+		{ self context at: #pod. self dirString: fsEntry }
 	]
 ]
