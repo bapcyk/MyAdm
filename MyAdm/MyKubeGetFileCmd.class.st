@@ -12,6 +12,7 @@ MyKubeGetFileCmd >> askSaveAs [
 	| dialog |
 	dialog := FileDialogWindow new
 		title: 'Save As...';
+		fileNameText: '.gz';
 		answerSaveFile.
 	^ dialog openModal answer
 ]
@@ -48,6 +49,7 @@ MyKubeGetFileCmd >> run: anArgs [
 	pod := anArgs first.
 	readPath := anArgs second.
 	writePath := anArgs third.
+	writePath ifNil: [ ^ '' ].
 	res := exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-it'. pod. 'gzip'. '--'. '-c'. readPath. }.
 	writePath binaryWriteStreamDo: [ :stream | stream nextPutAll: res ].
 	
