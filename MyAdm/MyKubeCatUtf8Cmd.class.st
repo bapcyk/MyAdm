@@ -1,40 +1,36 @@
 "
-I am a `kubectl exec -it <POD> cat <PATH>` command
+It's the same as `MyKubeCatCmd` but decodes output from UTF-8
 "
 Class {
-	#name : #MyKubeCatCmd,
+	#name : #MyKubeCatUtf8Cmd,
 	#superclass : #MyAbstractCmd,
 	#category : #MyAdm
 }
 
 { #category : #accessing }
-MyKubeCatCmd >> help [
-	^ 'File content'
+MyKubeCatUtf8Cmd >> help [
+	^ 'File content as UTF8'
 ]
 
 { #category : #initialization }
-MyKubeCatCmd >> initializeWithExec: anExec [
+MyKubeCatUtf8Cmd >> initializeWithExec: anExec [
 	"Initializes the command with the executor instance anExec"
-	| binExec |
-	binExec := anExec shallowCopy.
-	binExec encoding: nil.
-
 	self
-		initializeWithName: 'Cat'
+		initializeWithName: 'Cat UTF8'
 		subCmds: #( )
-		exec: binExec
+		exec: anExec
 		parser: MyPlainTextParser new
 		presenter: MyTextPresenter
 
 ]
 
 { #category : #accessing }
-MyKubeCatCmd >> requiredSelectionSize [
+MyKubeCatUtf8Cmd >> requiredSelectionSize [
 	^ 1
 ]
 
 { #category : #utilities }
-MyKubeCatCmd >> run: anArgs [
+MyKubeCatUtf8Cmd >> run: anArgs [
 	| pod path |
 	pod := anArgs first.
 	path := anArgs second.
@@ -43,13 +39,13 @@ MyKubeCatCmd >> run: anArgs [
 ]
 
 { #category : #running }
-MyKubeCatCmd >> runUI: anArgs [
+MyKubeCatUtf8Cmd >> runUI: anArgs [
 	extTitle := anArgs second.
 	^ super runUI: anArgs.
 ]
 
 { #category : #utilities }
-MyKubeCatCmd >> selectionAsArgs: aCmdName [
+MyKubeCatUtf8Cmd >> selectionAsArgs: aCmdName [
 	| sel |
 	sel := presenter selection.
 	^ sel ifNotNil: [ sel ]

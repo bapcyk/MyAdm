@@ -56,6 +56,7 @@ MyKubePodFsCmd >> initializeWithExec: anExec [
 		subCmds: {
 			self.
 			MyKubeCatCmd newCmd: anExec.
+			MyKubeCatUtf8Cmd newCmd: anExec.
 		}
 		exec: anExec
 		parser: (MyAlignedColumnsParser new margins: margins; header: header)
