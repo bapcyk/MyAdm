@@ -12,7 +12,7 @@ Class {
 		'presenterClass',
 		'presenter',
 		'context',
-		'presenterTitle'
+		'extTitle'
 	],
 	#category : #MyAdm
 }
@@ -118,7 +118,7 @@ MyAbstractCmd >> runUI: anArgs [
 	res := self run: anArgs.
 	parser parse: res.
 	presenter := presenterClass new.
-	presenter windowTitle: (presenterTitle ifNil: [ name ] ifNotNil: [ name, ': ', presenterTitle ]).
+	presenter windowTitle: (extTitle ifNil: [ name ] ifNotNil: [ name, ': ', extTitle ]).
 	presenter openWithSpec.
 	presenter initializeWithParser: parser cmds: subCmds forCmd: self.
 	presenter updatePresenter.

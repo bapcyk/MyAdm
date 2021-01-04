@@ -7,13 +7,6 @@ Class {
 	#category : #MyAdm
 }
 
-{ #category : #utilities }
-MyKubePodFsCmd class >> joinPath: aPath1 to: aPath2 [
-	^ aPath1 ifEmpty: [ aPath2 ]
-	         ifNotEmpty: [
-					aPath1 last = $/ ifTrue: [ aPath1, aPath2 ] ifFalse: [ aPath1, '/', aPath2 ] ]
-]
-
 { #category : #'changing state' }
 MyKubePodFsCmd >> changeTopDir: aDirName [
 	"Changes the top of the directories stack"
@@ -96,8 +89,11 @@ MyKubePodFsCmd >> runUI: anArgs [
 	dirStack := clone context at: #dir ifAbsent: ''.
 	dir := anArgs second.
 	"self context at: #dir put: (self class joinPath: dirStack to: dir)."
-	presenterTitle := dir.
-	self changeTopDir: dir.
+	"self changeTopDir: dir."
+	dir = '/'
+		ifTrue: [ self pushDir: '' ]
+		ifFalse: 	[ self context at: #dir put: (dir splitOn: '/') ].
+	extTitle := self dirString.
 	self context at: #pod put: anArgs first.
 	subCmds replaceAll: self with: clone.
 	^ super runUI: anArgs
