@@ -27,8 +27,24 @@ MySshExec >> initializeWithAddr: anAddr user: anUser bin: aBinPath [
 
 { #category : #abstract }
 MySshExec >> operate: aCmdArgs [
+	^ aCmdArgs stdin
+		ifNil: [
+			LibC resultOfCommand: ('{1} -l {2} {3} {4}' format: {bin. user. addr. aCmdArgs asString})
+		]
+		"ifNotNil: [
+			pipe := LibC pipe: ('{1} -l {2} {3} {4}' format: {bin. user. addr. aCmdArgs asString}) mode: 'w'.
+		]"
+]
 
-	^ LibC resultOfCommand: ('{1} -l {2} {3} {4}' format: {bin. user. addr. aCmdArgs asString})
+{ #category : #utilities }
+MySshExec >> runCmd: aCmdLine stdin: aStdinData [
+
+	| pipe |
+	pipe := MyLibC uniqueInstance.
+	pipe := pipe pipe: aCmdLine mode: 'wb'.
+	[ pipe fwrite: aStdinData size: aStdinData size pipe: pipe ] ensure: [ 
+		pipe fflush: pipe.
+		pipe pipeClose: pipe ]
 ]
 
 { #category : #classification }
