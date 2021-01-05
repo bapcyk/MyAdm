@@ -8,11 +8,12 @@ Class {
 }
 
 { #category : #utilities }
-MyKubeGetFileCmd >> askSaveAs [
+MyKubeGetFileCmd >> askSaveAs: aRecommendedName [
+	"Asks for saving file name by an offer of the recommended file name"
 	| dialog |
 	dialog := FileDialogWindow new
 		title: 'Save As...';
-		fileNameText: '.gz';
+		fileNameText: aRecommendedName;
 		answerSaveFile.
 	^ dialog openModal answer
 ]
@@ -59,7 +60,7 @@ MyKubeGetFileCmd >> run: anArgs [
 { #category : #running }
 MyKubeGetFileCmd >> runUI: anArgs [
 	| writePath |
-	writePath := self askSaveAs.
+	writePath := self askSaveAs: anArgs second asFileReference basename, '.gz'.
 	^ self run: (anArgs copyWith: writePath).
 
 ]
