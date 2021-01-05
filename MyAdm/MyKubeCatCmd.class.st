@@ -47,7 +47,10 @@ MyKubeCatCmd >> run: anArgs [
 
 { #category : #running }
 MyKubeCatCmd >> runUI: anArgs [
-	extTitle := anArgs second.
+	| path |
+	path := anArgs second.
+	extTitle := path.
+	subCmds do: [ :cmd | cmd class = MyKubeApplyFileCmd ifTrue: [ cmd contextAt: #path put: path ] ].
 	^ super runUI: anArgs.
 ]
 
