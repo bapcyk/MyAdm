@@ -38,7 +38,7 @@ MyKubeCatCmd >> run: anArgs [
 	| pod path |
 	pod := anArgs first.
 	path := anArgs second.
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-it'. pod. 'cat'. path. }
+	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. pod. 'cat'. path. }
 
 ]
 

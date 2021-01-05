@@ -34,7 +34,7 @@ MyKubePodRouteCmd >> requiredSelectionSize [
 { #category : #utilities }
 MyKubePodRouteCmd >> run: anArgs [
 
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-it'. anArgs first. 'ip'. 'route'. 'show'. }
+	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. anArgs first. 'ip'. 'route'. 'show'. }
 
 ]
 

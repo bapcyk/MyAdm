@@ -34,7 +34,7 @@ MyKubePodDfCmd >> requiredSelectionSize [
 { #category : #utilities }
 MyKubePodDfCmd >> run: anArgs [
 
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-it'. anArgs first. 'df'. }
+	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. anArgs first. 'df'. }
 
 ]
 

@@ -76,7 +76,7 @@ MyTablePresenter >> updatePresenter [
 	header doWithIndex: [ :headerColumn :headerIndex |
 			table addColumn: (
 				(SpStringTableColumn title: headerColumn evaluated: [ :row | columnAs value: headerIndex value: row ])
-				width: headerColumn size * 10; beExpandable)
+				width: headerColumn size * 10 + 20; beExpandable)
 	].
 
 	super updatePresenter.

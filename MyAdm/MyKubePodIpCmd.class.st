@@ -34,7 +34,7 @@ MyKubePodIpCmd >> requiredSelectionSize [
 { #category : #utilities }
 MyKubePodIpCmd >> run: anArgs [
 
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-it'. anArgs first. 'ip'. 'addr'. 'show'. }
+	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. anArgs first. 'ip'. 'addr'. 'show'. }
 
 ]
 

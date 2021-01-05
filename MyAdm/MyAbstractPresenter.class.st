@@ -25,9 +25,16 @@ MyAbstractPresenter >> initialize [
 { #category : #initialization }
 MyAbstractPresenter >> initializePresenters [
 	"Interface method: initializes toolbar only"
+
 	toolbar := self newToolbar.
+	super initializePresenters.	
 	^ toolbar
 
+]
+
+{ #category : #initialization }
+MyAbstractPresenter >> initializeWindow: aWindowPresenter [
+	aWindowPresenter initialExtent: 650@400.
 ]
 
 { #category : #initialization }
@@ -84,7 +91,8 @@ MyAbstractPresenter >> title [
 { #category : #initialization }
 MyAbstractPresenter >> updatePresenter [
 	"Successors must call it (`super updatePresenter`) after own implementation"
-
+	
+	super updatePresenter.	
 	cmds do: [ :cmd | 
 		| btn |
 		btn := SpToolbarButtonPresenter new

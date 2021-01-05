@@ -29,6 +29,7 @@ MyTextPresenter >> initialize [
 MyTextPresenter >> initializePresenters [
 	"Interface method"
 	text := self newText.
+	text whenSelectionChangedDo: [ :sel | self inform: 'Aaaaa!'. self onSelectionChanged ].
 	super initializePresenters
 ]
 
@@ -49,10 +50,7 @@ MyTextPresenter >> selection [
 { #category : #initialization }
 MyTextPresenter >> updatePresenter [
 	"Interface method"
-
 	data ifEmpty: [ ^ self ].
-
 	text text: data asString trim.
-
 	super updatePresenter.
 ]

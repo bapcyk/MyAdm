@@ -35,7 +35,7 @@ MyKubePodEnvCmd >> requiredSelectionSize [
 { #category : #utilities }
 MyKubePodEnvCmd >> run: anArgs [
 
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-it'. anArgs first. 'env'. }
+	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. anArgs first. 'env'. }
 
 ]
 
