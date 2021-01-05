@@ -31,9 +31,12 @@ MySshExec >> operate: aCmdArgs [
 		ifNil: [
 			LibC resultOfCommand: ('{1} -l {2} {3} {4}' format: {bin. user. addr. aCmdArgs asString})
 		]
-		"ifNotNil: [
-			pipe := LibC pipe: ('{1} -l {2} {3} {4}' format: {bin. user. addr. aCmdArgs asString}) mode: 'w'.
-		]"
+		ifNotNil: [
+			| cmdLine |
+			cmdLine := '{1} -l {2} {3} {4}' format: { bin. user. addr. aCmdArgs asString. }.
+			self runCmd: cmdLine stdin: aCmdArgs stdin.
+			''
+		]
 ]
 
 { #category : #utilities }
