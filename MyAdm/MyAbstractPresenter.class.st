@@ -34,7 +34,7 @@ MyAbstractPresenter >> initializePresenters [
 
 { #category : #initialization }
 MyAbstractPresenter >> initializeWindow: aWindowPresenter [
-	aWindowPresenter initialExtent: 650@400.
+	aWindowPresenter initialExtent: 650@400; title: windowTitle.
 ]
 
 { #category : #initialization }
