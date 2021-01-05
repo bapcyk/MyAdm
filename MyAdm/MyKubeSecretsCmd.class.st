@@ -33,7 +33,7 @@ MyKubeSecretsCmd >> initializeWithExec: anExec [
 { #category : #utilities }
 MyKubeSecretsCmd >> run: anArgs [
 	"Ignores all arguments because it does not require them"
-	^ exec exec: '<REMOTE-BIN>/kubectl get secrets'
+	^ exec exec: (MyCmdArgs fromLine: '<REMOTE-BIN>/kubectl get secrets')
 
 ]
 

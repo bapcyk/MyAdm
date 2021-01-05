@@ -21,24 +21,15 @@ MyAbstractExec class >> quoteArg: anArg [
 		ifFalse: anArg.
 ]
 
-{ #category : #utilities }
-MyAbstractExec >> argsAsString: anArgs [
-
-	"Converts anArgs to a string"
-
-	^ (anArgs collect: [ :arg | self quoteArgIfNeeded: arg ]) joinUsing: ' '
-]
-
 { #category : #converting }
 MyAbstractExec >> decode: aString [
 	^ encoding ifNil: [ aString ] ifNotNil: [ aString convertFromEncoding: encoding ].
 ]
 
-{ #category : #utilities }
-MyAbstractExec >> doExecString: aString [
-	"Calls successor's execString implementation"
-	^ self decode: (self execString: (self decode: aString)).
-	
+{ #category : #converting }
+MyAbstractExec >> encode: aString [
+	"Encodes aString if encoding is enabled"
+	^ encoding ifNil: [ aString ] ifNotNil: [ aString convertToEncoding: encoding ].
 ]
 
 { #category : #accessing }
@@ -54,27 +45,18 @@ MyAbstractExec >> encoding: anObject [
 ]
 
 { #category : #utilities }
-MyAbstractExec >> exec: aCmd [
-
+MyAbstractExec >> exec: aCmdArgs [
 	"Executes a list of arguments or a string command.
-	XXX THIS MESSAGE MUST BE USED TO EXECUTE SOMETHING, NOT execArgs neither execString!!!"
+	XXX THIS MESSAGE MUST BE USED TO EXECUTE SOMETHING"
+	| argsAsString |
+	argsAsString := [ (aCmdArgs processArgs: [ :arg | self quoteArgIfNeeded: (self substVars: arg) ]) joinUsing: ' ' ].
 
-	^ aCmd isString
-		  ifTrue: [ self doExecString: (self substVars: aCmd) ]
-		  ifFalse: [ 
-		  self execArgs: (aCmd collect: [ :c | self substVars: c ]) ]
-]
+	aCmdArgs isString
+		ifTrue: [ aCmdArgs processArg: [ :arg | self substVars: arg ] ]
+		ifFalse: [ argsAsString value ].
 
-{ #category : #utilities }
-MyAbstractExec >> execArgs: anArgs [
-	"Executes a command represented as a list"
-	^ self doExecString: (self argsAsString: anArgs)
-]
-
-{ #category : #abstract }
-MyAbstractExec >> execString: aString [
-	"Executes command, returns WideString"
-	self subclassResponsibility
+	aCmdArgs processLine: [ :line | self encode: line ].
+	^ self decode: (self operate: aCmdArgs).
 ]
 
 { #category : #initialization }
@@ -83,6 +65,12 @@ MyAbstractExec >> initialize [
 	vars := Dictionary new.
 	encoding := 'utf-8'.
 
+]
+
+{ #category : #abstract }
+MyAbstractExec >> operate: aString [
+	"Successors implementation: executes command line, returns WideString"
+	self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -121,9 +109,15 @@ MyAbstractExec >> substVars: aString [
 	^ s.
 ]
 
+{ #category : #classification }
+MyAbstractExec >> supports: aFeature [
+	"Returns is aFeature (string) is supported by the concrete executor"
+	^ false
+]
+
 { #category : #accessing }
 MyAbstractExec >> vars [
-
+	"Something like environment: <XXX> in args/command line will be substituted with #XXX item in vars"
 	^ vars
 ]
 

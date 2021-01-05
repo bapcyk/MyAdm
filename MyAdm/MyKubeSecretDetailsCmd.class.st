@@ -34,7 +34,7 @@ MyKubeSecretDetailsCmd >> requiredSelectionSize [
 { #category : #utilities }
 MyKubeSecretDetailsCmd >> run: anArgs [
 
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'get'. 'secret'. anArgs first. '-o'. 'yaml' }
+	^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'get'. 'secret'. anArgs first. '-o'. 'yaml' })
 ]
 
 { #category : #utilities }

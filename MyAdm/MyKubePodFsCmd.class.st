@@ -81,7 +81,7 @@ MyKubePodFsCmd >> run: anArgs [
 	| pod dir |
 	pod := anArgs first.
 	dir := anArgs second.
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. pod. 'ls'. '--'. '-l'. dir. }
+	^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. pod. 'ls'. '--'. '-l'. dir. })
 
 ]
 

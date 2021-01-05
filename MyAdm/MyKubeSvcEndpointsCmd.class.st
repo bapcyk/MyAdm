@@ -34,7 +34,7 @@ MyKubeSvcEndpointsCmd >> requiredSelectionSize [
 { #category : #utilities }
 MyKubeSvcEndpointsCmd >> run: anArgs [
 
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'get'. 'endpoints'. anArgs first. '-o'. 'yaml' }
+	^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'get'. 'endpoints'. anArgs first. '-o'. 'yaml' })
 
 ]
 

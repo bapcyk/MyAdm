@@ -29,7 +29,7 @@ MyKubeSvcCmd >> initializeWithExec: anExec [
 { #category : #utilities }
 MyKubeSvcCmd >> run: anArgs [
 	"Ignores all arguments because it does not require them"
-	^ exec exec: '<REMOTE-BIN>/kubectl get svc'
+	^ exec exec: (MyCmdArgs fromLine: '<REMOTE-BIN>/kubectl get svc')
 
 ]
 

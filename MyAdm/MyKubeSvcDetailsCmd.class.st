@@ -34,7 +34,7 @@ MyKubeSvcDetailsCmd >> requiredSelectionSize [
 { #category : #utilities }
 MyKubeSvcDetailsCmd >> run: anArgs [
 
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'get'. 'svc'. anArgs first. '-o'. 'yaml' }
+	^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'get'. 'svc'. anArgs first. '-o'. 'yaml' })
 
 ]
 

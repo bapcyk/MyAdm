@@ -17,8 +17,14 @@ MySockExec class >> defaultTimeout [
 	^ 10
 ]
 
+{ #category : #initialization }
+MySockExec >> initializeWithAddr: anAddr port: aPort [
+	addr := anAddr.
+	port := aPort.
+]
+
 { #category : #abstract }
-MySockExec >> execString: aString [
+MySockExec >> operate: aCmdArgs [
 
 	| sock resAddr res |
 	sock := Socket newTCP.
@@ -27,13 +33,7 @@ MySockExec >> execString: aString [
 	  sock
 		  connectTo: resAddr port: port;
 		  waitForConnectionFor: self class defaultTimeout;
-		  sendData: aString.
+		  sendData: aCmdArgs asString.
 	  res := sock receiveDataTimeout: self class defaultTimeout.
 	  res ] ensure: [ sock closeAndDestroy ]
-]
-
-{ #category : #initialization }
-MySockExec >> initializeWithAddr: anAddr port: aPort [
-	addr := anAddr.
-	port := aPort.
 ]

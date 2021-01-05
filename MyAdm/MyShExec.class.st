@@ -14,8 +14,8 @@ MyShExec class >> defaultTimeout [
 ]
 
 { #category : #abstract }
-MyShExec >> execString: aString [
+MyShExec >> operate: aCmdArgs [
 
-	^ LibC resultOfCommand: aString.
+	^ LibC resultOfCommand: aCmdArgs asString.
 
 ]

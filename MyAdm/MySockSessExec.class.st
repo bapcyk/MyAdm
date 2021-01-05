@@ -61,12 +61,6 @@ MySockSessExec >> disconnect [
 	self sock closeAndDestroy
 ]
 
-{ #category : #abstract }
-MySockSessExec >> execString: aString [
-	"Executes command, returns ByteString"
-	^ self sendAndRecv: aString
-]
-
 { #category : #initialization }
 MySockSessExec >> initializeWithSock: aSocket addr: anAddress [
 	"Constructor with a socket and an address"
@@ -87,6 +81,12 @@ MySockSessExec >> nextPutAll: aData [
 	"Sends aData through the socket"
 
 	^ self sock sendData: aData.
+]
+
+{ #category : #abstract }
+MySockSessExec >> operate: aCmdArgs [
+	"Executes command, returns ByteString"
+	^ self sendAndRecv: aCmdArgs asString
 ]
 
 { #category : #accessing }

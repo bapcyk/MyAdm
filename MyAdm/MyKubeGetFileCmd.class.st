@@ -50,7 +50,7 @@ MyKubeGetFileCmd >> run: anArgs [
 	readPath := anArgs second.
 	writePath := anArgs third.
 	writePath ifNil: [ ^ '' ].
-	res := exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. pod. 'gzip'. '--'. '-c'. readPath. }.
+	res := exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. pod. 'gzip'. '--'. '-c'. readPath. }).
 	writePath binaryWriteStreamDo: [ :stream | stream nextPutAll: res ].
 	
 

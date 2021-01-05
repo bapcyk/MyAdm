@@ -34,7 +34,7 @@ MyKubePodSsCmd >> requiredSelectionSize [
 { #category : #utilities }
 MyKubePodSsCmd >> run: anArgs [
 
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. anArgs first. 'ss'. '--'. '-a'. '-p'. }
+	^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. anArgs first. 'ss'. '--'. '-a'. '-p'. })
 
 ]
 

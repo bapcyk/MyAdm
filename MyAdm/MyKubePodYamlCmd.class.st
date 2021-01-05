@@ -34,7 +34,7 @@ MyKubePodYamlCmd >> requiredSelectionSize [
 { #category : #utilities }
 MyKubePodYamlCmd >> run: anArgs [
 
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'get'. 'pod'. anArgs first. '-o'. 'yaml' }
+	^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'get'. 'pod'. anArgs first. '-o'. 'yaml' })
 
 ]
 

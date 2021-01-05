@@ -1,24 +1,21 @@
-"
-I am a `kubectl exec -it <POD> ip addr show` command
-"
 Class {
-	#name : #MyKubePodIpCmd,
+	#name : #MyKubeApplyFileCmd,
 	#superclass : #MyAbstractCmd,
 	#category : #MyAdm
 }
 
 { #category : #accessing }
-MyKubePodIpCmd >> help [
-	^ 'Network interfaces'
+MyKubeApplyFileCmd >> help [
+	^ 'Apply Edited File'
 ]
 
 { #category : #initialization }
-MyKubePodIpCmd >> initializeWithExec: anExec [
+MyKubeApplyFileCmd >> initializeWithExec: anExec [
 
 	"Initializes the command with the executor instance anExec"
 
 	self
-		initializeWithName: 'IP'
+		initializeWithName: 'Apply File'
 		subCmds: #( )
 		exec: anExec
 		parser: MyPlainTextParser new
@@ -26,20 +23,15 @@ MyKubePodIpCmd >> initializeWithExec: anExec [
 
 ]
 
-{ #category : #accessing }
-MyKubePodIpCmd >> requiredSelectionSize [
-	^ 1
-]
-
 { #category : #utilities }
-MyKubePodIpCmd >> run: anArgs [
+MyKubeApplyFileCmd >> run: anArgs [
 
 	^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. anArgs first. 'ip'. 'addr'. 'show'. })
 
 ]
 
 { #category : #utilities }
-MyKubePodIpCmd >> selectionAsArgs: aCmdName [
+MyKubeApplyFileCmd >> selectionAsArgs: aCmdName [
 	| sel |
 	sel := presenter selection.
 	^ sel ifNotNil: [ sel ]

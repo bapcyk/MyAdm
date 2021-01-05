@@ -41,7 +41,7 @@ MyKubePodsCmd >> initializeWithExec: anExec [
 { #category : #utilities }
 MyKubePodsCmd >> run: anArgs [
 	"Ignores all arguments because it does not require them"
-	^ exec exec: '<REMOTE-BIN>/kubectl get pod'
+	^ exec exec: (MyCmdArgs fromLine: '<REMOTE-BIN>/kubectl get pod')
 
 ]
 

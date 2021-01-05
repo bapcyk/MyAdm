@@ -15,13 +15,16 @@ MyKubeCatCmd >> help [
 { #category : #initialization }
 MyKubeCatCmd >> initializeWithExec: anExec [
 	"Initializes the command with the executor instance anExec"
-	| binExec |
+	| binExec theSubCmds |
 	binExec := anExec shallowCopy.
 	binExec encoding: nil.
 
+	theSubCmds := OrderedCollection new.
+	(anExec supports: #stdin) ifTrue: [ theSubCmds add: (MyKubeApplyFileCmd newCmd: binExec) ].
+
 	self
 		initializeWithName: 'Cat'
-		subCmds: #( )
+		subCmds: theSubCmds
 		exec: binExec
 		parser: MyPlainTextParser new
 		presenter: MyTextPresenter
@@ -38,7 +41,7 @@ MyKubeCatCmd >> run: anArgs [
 	| pod path |
 	pod := anArgs first.
 	path := anArgs second.
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. pod. 'cat'. path. }
+	^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. pod. 'cat'. path. })
 
 ]
 

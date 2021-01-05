@@ -34,7 +34,7 @@ MyKubeDescribePodCmd >> requiredSelectionSize [
 { #category : #utilities }
 MyKubeDescribePodCmd >> run: anArgs [
 
-	^ exec exec: { '<REMOTE-BIN>/kubectl'. 'describe'. 'pod'. anArgs first. }
+	^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'describe'. 'pod'. anArgs first. })
 
 ]
 

@@ -16,12 +16,6 @@ MyPoshExec class >> defaultTimeout [
 	^ 10
 ]
 
-{ #category : #abstract }
-MyPoshExec >> execString: aString [
-
-	^ LibC resultOfCommand: ('{1} -Command {2}' format: {bin. aString})
-]
-
 { #category : #initialization }
 MyPoshExec >> initialize [
 	super initialize.
@@ -31,4 +25,10 @@ MyPoshExec >> initialize [
 { #category : #initialization }
 MyPoshExec >> initializeWithBin: aBinPath [
 	bin := aBinPath.
+]
+
+{ #category : #abstract }
+MyPoshExec >> operate: aCmdArgs [
+
+	^ LibC resultOfCommand: ('{1} -Command {2}' format: {bin. aCmdArgs asString})
 ]

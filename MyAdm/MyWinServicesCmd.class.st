@@ -32,7 +32,7 @@ MyWinServicesCmd >> initializeWithExec: anExec [
 { #category : #utilities }
 MyWinServicesCmd >> run: anArgs [
 	"Ignores all arguments because it does not require them"
-	^ exec exec: 'Get-Service'
+	^ exec exec: (MyCmdArgs fromLine: 'Get-Service')
 
 ]
 
