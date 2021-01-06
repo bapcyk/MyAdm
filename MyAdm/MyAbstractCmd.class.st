@@ -128,6 +128,7 @@ MyAbstractCmd >> runUI: anArgs [
 	presenter openWithSpec.
 	presenter initializeWithParser: parser cmds: subCmds forCmd: self.
 	presenter updatePresenter.
+	^ res.
 ]
 
 { #category : #utilities }

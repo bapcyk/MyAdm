@@ -36,8 +36,7 @@ MyKubeSecretCmd >> isEnabledForSelection: aPresentCmd [
 { #category : #utilities }
 MyKubeSecretCmd >> run: anArgs [
 	| res lines |
-	"^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'get'. 'secret'. anArgs first. '-o'. 'jsonpath=''{.data}''' })."
-	res := exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'get'. 'secret'. anArgs first. '-o'. 'json'}).
+	res := exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'get'. 'secret'. anArgs first. '-o'. 'json' }).
 	res := STONJSON fromString: res.
 	res := res at: #data.
 	lines := OrderedCollection new.
