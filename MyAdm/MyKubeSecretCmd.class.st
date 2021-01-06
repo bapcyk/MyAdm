@@ -14,15 +14,16 @@ MyKubeSecretCmd >> help [
 
 { #category : #initialization }
 MyKubeSecretCmd >> initializeWithExec: anExec [
-
 	"Initializes the command with the executor instance anExec"
+	| header |
+	header := #('ITEM' 'BASE64 VALUE').
 
 	self
 		initializeWithName: 'Get Secret'
 		subCmds: { MyKubeBase64Cmd newCmd: anExec }
 		exec: anExec
-		parser: MyPlainTextParser new
-		presenter: MyTextPresenter
+		parser: (MyRcParser new columnsDelim: $*; header: header)
+		presenter: MyTablePresenter
 
 ]
 
@@ -34,13 +35,25 @@ MyKubeSecretCmd >> isEnabledForSelection: aPresentCmd [
 
 { #category : #utilities }
 MyKubeSecretCmd >> run: anArgs [
-
-	^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'get'. 'secret'. anArgs first. '-o'. 'jsonpath=''{.data}''' })
+	| res lines |
+	"^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'get'. 'secret'. anArgs first. '-o'. 'jsonpath=''{.data}''' })."
+	res := exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'get'. 'secret'. anArgs first. '-o'. 'json'}).
+	res := STONJSON fromString: res.
+	res := res at: #data.
+	lines := OrderedCollection new.
+	res keysAndValuesDo: [ :k :v |
+		lines add: k asString, '*', v asString
+	].
+	^ Character lf join: lines.
 ]
 
 { #category : #utilities }
 MyKubeSecretCmd >> selectionAsArgs: aCmdName [
 	| sel |
 	sel := presenter selection.
-	^ sel ifNotNil: [ sel ]
+	^ sel ifNotNil: [
+		aCmdName = 'Decode Base64'
+			ifTrue: [ { sel first second } ]
+			ifFalse: [ sel ]
+	]
 ]

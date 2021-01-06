@@ -1,3 +1,10 @@
+"
+I am a command applying changes to the opened file. The algorithm uses the command:
+`ssh.exe -l XX XX.XX.XX.XX kubectl exec -i <POD> sh -- -c ""'cat > \\""<PATH>\\""'""`
+
+So, it compress first the file into .gz file then it send it to the stdin of this command (internally).
+It can be reproduced in the terminal as `zcat xxx.gz|<THAT-COMMAND>`.
+"
 Class {
 	#name : #MyKubeApplyFileCmd,
 	#superclass : #MyAbstractCmd,
