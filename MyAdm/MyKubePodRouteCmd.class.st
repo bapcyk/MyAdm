@@ -26,9 +26,10 @@ MyKubePodRouteCmd >> initializeWithExec: anExec [
 
 ]
 
-{ #category : #accessing }
-MyKubePodRouteCmd >> requiredSelectionSize [
-	^ 1
+{ #category : #testing }
+MyKubePodRouteCmd >> isEnabledForSelection: aPresentCmd [
+	"Returns boolean flag is the command enbaled for this selection"
+	^ aPresentCmd selectedCount = 1
 ]
 
 { #category : #utilities }

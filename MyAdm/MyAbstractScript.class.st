@@ -34,6 +34,7 @@ MyAbstractScript >> initializeWithCfg: aCfgPath [
 
 { #category : #accessing }
 MyAbstractScript >> myAt: aKey [
+	"Answers config parameters with aKey"
 	^ self at: (self class name) at: aKey
 ]
 

@@ -74,13 +74,21 @@ MyAbstractPresenter >> onCmd: aCmdName event: anEvent button: aButton [
 { #category : #actions }
 MyAbstractPresenter >> onSelectionChanged [
 	"Should be called by successor-presenter to update buttons states"
-	| selSize |
+	1 to: cmds size do: [ :i |
+		| cmd |
+		cmd := cmds at: i.
+		(cmd isEnabledForSelection: presentCmd)
+			ifTrue: [ (toolbar items at: i) enable ]
+			ifFalse: [ (toolbar items at: i) disable ]
+	].
+
+	"| selSize |
 	selSize := self selection ifNil: [ 0 ] ifNotNil: [ self selection size ].
 	1 to: cmds size do: [ :i |
 		(cmds at: i) requiredSelectionSize <= selSize
 			ifTrue: [ (toolbar items at: i) enable ]
 			ifFalse: [ (toolbar items at: i) disable ]
-	].
+	]."
 ]
 
 { #category : #accessing }

@@ -26,9 +26,10 @@ MyKubeSvcEndpointsCmd >> initializeWithExec: anExec [
 
 ]
 
-{ #category : #accessing }
-MyKubeSvcEndpointsCmd >> requiredSelectionSize [
-	^ 1
+{ #category : #testing }
+MyKubeSvcEndpointsCmd >> isEnabledForSelection: aPresentCmd [
+	"Returns boolean flag is the command enbaled for this selection"
+	^ aPresentCmd selectedCount = 1
 ]
 
 { #category : #utilities }

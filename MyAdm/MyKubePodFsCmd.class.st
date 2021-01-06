@@ -65,15 +65,31 @@ MyKubePodFsCmd >> initializeWithExec: anExec [
 
 ]
 
+{ #category : #testing }
+MyKubePodFsCmd >> isEnabledForSelection: aPresentCmd [
+	"Returns boolean flag is the command enbaled for this selection"
+	aPresentCmd selectedCount = 1 ifFalse: [ ^ false ].
+	^ (aPresentCmd respondsTo: #isFileSelected)
+			ifTrue: [ aPresentCmd isFileSelected not ]
+			"if no way to detect what is selected, assume that it's directory since this button exists in the toolbar"
+			ifFalse: true
+
+]
+
+{ #category : #testing }
+MyKubePodFsCmd >> isFileSelected [
+	"Returns true if a one file is selected"
+	| sel |
+	sel := presenter selection.
+	sel ifNil: [ ^ false ].
+	^ sel first first beginsWith: '-'.
+
+]
+
 { #category : #'changing state' }
 MyKubePodFsCmd >> pushDir: aDirName [
 	"Pushes a new directory name to the dirs stack"
 	self dirs add: aDirName
-]
-
-{ #category : #accessing }
-MyKubePodFsCmd >> requiredSelectionSize [
-	^ 1
 ]
 
 { #category : #utilities }

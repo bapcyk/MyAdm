@@ -26,9 +26,10 @@ MyKubeDescribePodCmd >> initializeWithExec: anExec [
 
 ]
 
-{ #category : #accessing }
-MyKubeDescribePodCmd >> requiredSelectionSize [
-	^ 1
+{ #category : #testing }
+MyKubeDescribePodCmd >> isEnabledForSelection: aPresentCmd [
+	"Returns boolean flag is the command enbaled for this selection"
+	^ aPresentCmd selectedCount = 1
 ]
 
 { #category : #utilities }

@@ -31,9 +31,10 @@ MyKubeCatCmd >> initializeWithExec: anExec [
 
 ]
 
-{ #category : #accessing }
-MyKubeCatCmd >> requiredSelectionSize [
-	^ 1
+{ #category : #testing }
+MyKubeCatCmd >> isEnabledForSelection: aPresentCmd [
+	"Returns boolean flag is the command enbaled for this selection"
+	^ aPresentCmd isFileSelected
 ]
 
 { #category : #utilities }
@@ -59,7 +60,7 @@ MyKubeCatCmd >> runUI: anArgs [
 { #category : #utilities }
 MyKubeCatCmd >> selectionAsArgs: aCmdName [
 	| sel |
-	
+
 	aCmdName = 'Apply File' ifTrue: [
 		^ { self context at: #pod. self context at: #path. presenter contents. }.
 	].

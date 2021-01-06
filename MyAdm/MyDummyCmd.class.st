@@ -5,8 +5,7 @@ Class {
 	#name : #MyDummyCmd,
 	#superclass : #MyAbstractCmd,
 	#instVars : [
-		'action',
-		'requiredSelectionSize'
+		'action'
 	],
 	#category : #MyAdm
 }
@@ -43,18 +42,6 @@ MyDummyCmd >> initializeWithExec: anExec [
 { #category : #accessing }
 MyDummyCmd >> name: aName [
 	name := aName.
-]
-
-{ #category : #accessing }
-MyDummyCmd >> requiredSelectionSize [
-
-	^ requiredSelectionSize
-]
-
-{ #category : #accessing }
-MyDummyCmd >> requiredSelectionSize: anObject [
-
-	requiredSelectionSize := anObject
 ]
 
 { #category : #utilities }

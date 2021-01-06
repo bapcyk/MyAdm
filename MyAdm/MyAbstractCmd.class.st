@@ -88,16 +88,15 @@ MyAbstractCmd >> initializeWithName: aName subCmds: aCmds exec: anExec parser: a
 
 ]
 
+{ #category : #testing }
+MyAbstractCmd >> isEnabledForSelection: aSelection [
+	"Returns boolean flag is the command enbaled for this selection"
+	^ true
+]
+
 { #category : #accesing }
 MyAbstractCmd >> name [
 	^ name
-]
-
-{ #category : #accessing }
-MyAbstractCmd >> requiredSelectionSize [
-	"The size of the selection (string size, rows number, etc) which is required for the
-	command to be allowed and relevant"
-	^ 0
 ]
 
 { #category : #utilities }
@@ -129,6 +128,13 @@ MyAbstractCmd >> runUI: anArgs [
 	presenter openWithSpec.
 	presenter initializeWithParser: parser cmds: subCmds forCmd: self.
 	presenter updatePresenter.
+]
+
+{ #category : #utilities }
+MyAbstractCmd >> selectedCount [
+	"Number of selected items"
+	^ (presenter selection ifNil: #()) size.
+
 ]
 
 { #category : #utilities }

@@ -24,9 +24,10 @@ MyKubeCatUtf8Cmd >> initializeWithExec: anExec [
 
 ]
 
-{ #category : #accessing }
-MyKubeCatUtf8Cmd >> requiredSelectionSize [
-	^ 1
+{ #category : #testing }
+MyKubeCatUtf8Cmd >> isEnabledForSelection: aPresentCmd [
+	"Returns boolean flag is the command enbaled for this selection"
+	^ aPresentCmd isFileSelected
 ]
 
 { #category : #utilities }

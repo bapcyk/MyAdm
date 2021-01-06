@@ -26,9 +26,10 @@ MyKubePodYamlCmd >> initializeWithExec: anExec [
 
 ]
 
-{ #category : #accessing }
-MyKubePodYamlCmd >> requiredSelectionSize [
-	^ 1
+{ #category : #testing }
+MyKubePodYamlCmd >> isEnabledForSelection: aPresentCmd [
+	"Returns boolean flag is the command enbaled for this selection"
+	^ aPresentCmd selectedCount = 1
 ]
 
 { #category : #utilities }

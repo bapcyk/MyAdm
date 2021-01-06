@@ -39,9 +39,10 @@ MyKubeGetFileCmd >> initializeWithExec: anExec [
 
 ]
 
-{ #category : #accessing }
-MyKubeGetFileCmd >> requiredSelectionSize [
-	^ 1
+{ #category : #testing }
+MyKubeGetFileCmd >> isEnabledForSelection: aPresentCmd [
+	"Returns boolean flag is the command enbaled for this selection"
+	^ aPresentCmd isFileSelected
 ]
 
 { #category : #utilities }

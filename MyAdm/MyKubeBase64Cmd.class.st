@@ -26,9 +26,10 @@ MyKubeBase64Cmd >> initializeWithExec: anExec [
 
 ]
 
-{ #category : #accessing }
-MyKubeBase64Cmd >> requiredSelectionSize [
-	^ 1
+{ #category : #testing }
+MyKubeBase64Cmd >> isEnabledForSelection: aPresentCmd [
+	"Returns boolean flag is the command enbaled for this selection"
+	^ aPresentCmd selectedCount > 0
 ]
 
 { #category : #utilities }
