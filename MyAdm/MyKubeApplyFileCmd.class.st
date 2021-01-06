@@ -25,9 +25,23 @@ MyKubeApplyFileCmd >> initializeWithExec: anExec [
 
 { #category : #utilities }
 MyKubeApplyFileCmd >> run: anArgs [
+	| pod path contents compressedContents theCmdArgs |
+	pod := anArgs first.
+	path := anArgs second.
+	contents := anArgs third.
+	compressedContents := MyGzip compress: contents asString asByteArray.
 
-	^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. anArgs first. 'ip'. 'addr'. 'show'. })
+	theCmdArgs := MyCmdArgs
+		fromArgs: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. pod. 'sh'. '--'. '-c'. '"''zcat > \"', path, '\"''"'. }
+		stdin: compressedContents.
 
+	^ exec exec: theCmdArgs.
+
+]
+
+{ #category : #running }
+MyKubeApplyFileCmd >> runUI: anArgs [
+	^ self run: anArgs
 ]
 
 { #category : #utilities }

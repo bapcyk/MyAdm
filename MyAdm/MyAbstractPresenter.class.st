@@ -14,6 +14,12 @@ Class {
 	#category : #MyAdm
 }
 
+{ #category : #accessing }
+MyAbstractPresenter >> contents [
+	"Returns all contents, not only selected"
+	self subclassResponsibility
+]
+
 { #category : #initialization }
 MyAbstractPresenter >> initialize [
 	cmds ifNil: [ cmds := #() ].

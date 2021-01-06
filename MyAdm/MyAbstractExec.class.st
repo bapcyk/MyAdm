@@ -48,12 +48,12 @@ MyAbstractExec >> encoding: anObject [
 MyAbstractExec >> exec: aCmdArgs [
 	"Executes a list of arguments or a string command.
 	XXX THIS MESSAGE MUST BE USED TO EXECUTE SOMETHING"
-	| argsAsString |
-	argsAsString := [ (aCmdArgs processArgs: [ :arg | self quoteArgIfNeeded: (self substVars: arg) ]) joinUsing: ' ' ].
 
 	aCmdArgs isString
 		ifTrue: [ aCmdArgs processArg: [ :arg | self substVars: arg ] ]
-		ifFalse: [ argsAsString value ].
+		ifFalse: [
+			(aCmdArgs processArgs: [ :arg | self quoteArgIfNeeded: (self substVars: arg) ]) joinUsing: ' '
+			].
 
 	aCmdArgs processLine: [ :line | self encode: line ].
 	^ self decode: (self operate: aCmdArgs).

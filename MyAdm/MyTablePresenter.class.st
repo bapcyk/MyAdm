@@ -21,6 +21,12 @@ MyTablePresenter class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #accessing }
+MyTablePresenter >> contents [
+	"Returns all contents, not only selected"
+	^ table items
+]
+
 { #category : #initialization }
 MyTablePresenter >> initialize [
 	header := #().

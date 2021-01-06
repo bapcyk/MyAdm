@@ -18,6 +18,13 @@ MyLibC >> fputs: aStr pipe: aPipe [
 ]
 
 { #category : #'api - piping' }
+MyLibC >> fwrite: aData size: aSize count: aCount pipe: aPipe [
+	"Write string."
+	^self ffiCall: #(int fwrite(void* aData, int aSize, int aCount, ExternalAddress *aPipe))
+
+]
+
+{ #category : #'api - piping' }
 MyLibC >> fwrite: aData size: aSize pipe: aPipe [
 	"Write string."
 	| itemSize |

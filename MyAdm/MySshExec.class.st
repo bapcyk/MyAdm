@@ -42,12 +42,12 @@ MySshExec >> operate: aCmdArgs [
 { #category : #utilities }
 MySshExec >> runCmd: aCmdLine stdin: aStdinData [
 
-	| pipe |
-	pipe := MyLibC uniqueInstance.
-	pipe := pipe pipe: aCmdLine mode: 'wb'.
-	[ pipe fwrite: aStdinData size: aStdinData size pipe: pipe ] ensure: [ 
-		pipe fflush: pipe.
-		pipe pipeClose: pipe ]
+	| pipe libC |
+	libC := MyLibC uniqueInstance.
+	pipe := libC pipe: aCmdLine mode: 'wb'.
+	[ libC fwrite: aStdinData size: 1 count: aStdinData size pipe: pipe ] ensure: [ 
+		libC fflush: pipe.
+		libC pipeClose: pipe ]
 ]
 
 { #category : #classification }

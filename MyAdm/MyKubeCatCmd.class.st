@@ -47,16 +47,23 @@ MyKubeCatCmd >> run: anArgs [
 
 { #category : #running }
 MyKubeCatCmd >> runUI: anArgs [
-	| path |
+	| pod path |
+	pod := anArgs first.
 	path := anArgs second.
 	extTitle := path.
-	subCmds do: [ :cmd | cmd class = MyKubeApplyFileCmd ifTrue: [ cmd contextAt: #path put: path ] ].
+	self contextAt: #pod put: pod.
+	self contextAt: #path put: path.
 	^ super runUI: anArgs.
 ]
 
 { #category : #utilities }
 MyKubeCatCmd >> selectionAsArgs: aCmdName [
 	| sel |
+	
+	aCmdName = 'Apply File' ifTrue: [
+		^ { self context at: #pod. self context at: #path. presenter contents. }.
+	].
+
 	sel := presenter selection.
 	^ sel ifNotNil: [ sel ]
 ]

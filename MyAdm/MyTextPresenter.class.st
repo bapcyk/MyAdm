@@ -19,6 +19,12 @@ MyTextPresenter class >> defaultSpec [
 		yourself
 ]
 
+{ #category : #accessing }
+MyTextPresenter >> contents [
+	"Returns all contents, not only selected"
+	^ text text
+]
+
 { #category : #initialization }
 MyTextPresenter >> initialize [
 	data := ''.	
