@@ -56,7 +56,7 @@ MyTextPresenter >> selection [
 { #category : #initialization }
 MyTextPresenter >> updatePresenter [
 	"Interface method"
-	data ifEmpty: [ ^ self ].
-	text text: data asString trim.
+	"data ifEmpty: [ ^ self ]."
+	text text: data asString "trim".
 	super updatePresenter.
 ]
