@@ -34,8 +34,9 @@ MyTextPresenter >> initialize [
 { #category : #initialization }
 MyTextPresenter >> initializePresenters [
 	"Interface method"
-	text := self newText.
-	text whenSelectionChangedDo: [ :sel | self inform: 'Aaaaa!'. self onSelectionChanged ].
+	text := self newText
+		"whenSelectionChangedDo: [ :sel | self inform: 'Aaaaa!'. self onSelectionChanged ];"
+		addStyle: 'text'.
 	super initializePresenters
 ]
 

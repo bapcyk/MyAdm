@@ -14,6 +14,9 @@ Class {
 		'context',
 		'extTitle'
 	],
+	#classVars : [
+		'app'
+	],
 	#category : #MyAdm
 }
 
@@ -66,6 +69,7 @@ MyAbstractCmd >> help [
 { #category : #initialization }
 MyAbstractCmd >> initialize [
 	context := Dictionary new.
+	app := MyApp new.
 
 ]
 
@@ -123,7 +127,7 @@ MyAbstractCmd >> runUI: anArgs [
 		^ self inform: 'No valid data, just ''', (res trim truncateWithElipsisTo: 34), ''''
 		].
 	
-	presenter := presenterClass new.
+	presenter := app newPresenter: presenterClass.
 	presenter windowTitle: (extTitle ifNil: [ name ] ifNotNil: [ name, ': ', extTitle ]).
 	presenter openWithSpec.
 	presenter initializeWithParser: parser cmds: subCmds forCmd: self.
