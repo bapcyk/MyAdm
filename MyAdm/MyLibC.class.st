@@ -1,3 +1,6 @@
+"
+I am a successor of `LibC` - with additional methods.
+"
 Class {
 	#name : #MyLibC,
 	#superclass : #LibC,

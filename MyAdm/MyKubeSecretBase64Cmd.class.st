@@ -1,3 +1,6 @@
+"
+I am a clone of `MyKubeBase64Cmd` but for a secret (with a subcommand of an apply of the changes).
+"
 Class {
 	#name : #MyKubeSecretBase64Cmd,
 	#superclass : #MyAbstractCmd,

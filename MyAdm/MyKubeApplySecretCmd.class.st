@@ -1,3 +1,6 @@
+"
+I am an applier (editor) of the secret via a command `<REMOTE-BIN>/kubectl apply -f -`
+"
 Class {
 	#name : #MyKubeApplySecretCmd,
 	#superclass : #MyAbstractCmd,

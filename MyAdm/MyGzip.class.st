@@ -1,3 +1,6 @@
+"
+I am a .gz compressor (see class methods)
+"
 Class {
 	#name : #MyGzip,
 	#superclass : #Object,

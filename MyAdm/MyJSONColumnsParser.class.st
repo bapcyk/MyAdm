@@ -1,3 +1,7 @@
+"
+I am a parser of the JSON data as a columns (list of pairs: key converting to a string, value converting to a string too).
+I do it directly with items of the dictionary or with its part retrieving with the key `zoomIn` (inst. var)
+"
 Class {
 	#name : #MyJSONColumnsParser,
 	#superclass : #MyAbstractParser,
