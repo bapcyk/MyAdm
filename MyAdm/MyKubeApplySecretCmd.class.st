@@ -25,20 +25,27 @@ MyKubeApplySecretCmd >> initializeWithExec: anExec [
 
 { #category : #utilities }
 MyKubeApplySecretCmd >> run: anArgs [
-	| pod secretItem contents json compressedContents theCmdArgs |
+	| pod secretItem contents encodedContents json theCmdArgs |
 	contents := anArgs first.
-	secretItem := anArgs second.	
+	secretItem := anArgs second.
 	pod := anArgs third.
-	json := anArgs fourth.
+	json := STONJSON fromString: anArgs fourth.
 
-	compressedContents := MyGzip compress: contents asString asByteArray.
+	encodedContents := contents asString asByteArray base64Encoded.
+	(json at: 'data') at: secretItem put: encodedContents.
+	contents := (STONJSON toString: json) asString asByteArray.
 
 	theCmdArgs := MyCmdArgs
-		fromArgs: { '<REMOTE-BIN>/kubectl'. 'exec'. '-i'. pod. 'sh'. '--'. '-c'. '"''zcat > \"', '<XXX>', '\"''"'. }
-		stdin: compressedContents.
+		fromArgs: { '<REMOTE-BIN>/kubectl'. 'apply'. '-f'. '-'. }
+		stdin: contents.
 
 	^ exec exec: theCmdArgs.
 
+]
+
+{ #category : #running }
+MyKubeApplySecretCmd >> runUI: anArgs [
+	^ self run: anArgs
 ]
 
 { #category : #utilities }
