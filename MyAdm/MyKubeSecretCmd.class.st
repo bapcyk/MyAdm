@@ -22,7 +22,7 @@ MyKubeSecretCmd >> initializeWithExec: anExec [
 		initializeWithName: 'Get Secret'
 		subCmds: { MyKubeBase64Cmd newCmd: anExec }
 		exec: anExec
-		parser: (MyRcParser new columnsDelim: $*; header: header)
+		parser: (MyJSONColumnsParser new zoomIn: 'data'; header: header)
 		presenter: MyTablePresenter
 
 ]
@@ -35,15 +35,8 @@ MyKubeSecretCmd >> isEnabledForSelection: aPresentCmd [
 
 { #category : #utilities }
 MyKubeSecretCmd >> run: anArgs [
-	| res lines |
-	res := exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'get'. 'secret'. anArgs first. '-o'. 'json' }).
-	res := STONJSON fromString: res.
-	res := res at: #data.
-	lines := OrderedCollection new.
-	res keysAndValuesDo: [ :k :v |
-		lines add: k asString, '*', v asString
-	].
-	^ Character lf join: lines.
+	^ exec exec: (MyCmdArgs fromArgs: { '<REMOTE-BIN>/kubectl'. 'get'. 'secret'. anArgs first. '-o'. 'json' }).
+
 ]
 
 { #category : #utilities }
