@@ -3,7 +3,7 @@ I am a `kubectl exec -it <POD> ls -- -l <DIR>` command
 "
 Class {
 	#name : #MyKubePodFsCmd,
-	#superclass : #MyAbstractCmd,
+	#superclass : #MyAbstractFSEntriesCmd,
 	#category : #MyAdm
 }
 
@@ -66,11 +66,22 @@ MyKubePodFsCmd >> initializeWithExec: anExec [
 ]
 
 { #category : #testing }
+MyKubePodFsCmd >> isDirectorySelected [
+	"Returns true if a one file is selected"
+	| sel mode |
+	sel := presenter selection.
+	sel ifNil: [ ^ false ].
+	mode := sel first first.
+	"l... is treated as possible directory"
+	^ (mode beginsWith: 'd') or: (mode beginsWith: 'l').
+]
+
+{ #category : #testing }
 MyKubePodFsCmd >> isEnabledForSelection: aPresentCmd [
 	"Returns boolean flag is the command enbaled for this selection"
 	aPresentCmd selectedCount = 1 ifFalse: [ ^ false ].
-	^ (aPresentCmd respondsTo: #isFileSelected)
-			ifTrue: [ aPresentCmd isFileSelected not ]
+	^ (aPresentCmd isKindOf: MyAbstractFSEntriesCmd)
+			ifTrue: [ aPresentCmd isDirectorySelected ]
 			"if no way to detect what is selected, assume that it's directory since this button exists in the toolbar"
 			ifFalse: true
 
@@ -79,10 +90,12 @@ MyKubePodFsCmd >> isEnabledForSelection: aPresentCmd [
 { #category : #testing }
 MyKubePodFsCmd >> isFileSelected [
 	"Returns true if a one file is selected"
-	| sel |
+	| sel mode |
 	sel := presenter selection.
 	sel ifNil: [ ^ false ].
-	^ sel first first beginsWith: '-'.
+	mode := sel first first.
+	"l... is treated as possible file"
+	^ (mode beginsWith: '-') or: (mode beginsWith: 'l').
 
 ]
 

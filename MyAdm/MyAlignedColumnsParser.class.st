@@ -142,7 +142,7 @@ MyAlignedColumnsParser >> header: aHeader [
 			headerless := true.
 			customHeader := nil ]
 		ifNotNil: [ 
-			headerless := false.
+			headerless := true.
 			customHeader := aHeader ]
 ]
 
