@@ -112,7 +112,7 @@ MyKubePodFsCmd >> runUI: anArgs [
 		ifTrue: [ self pushDir: '' ]
 		ifFalse: 	[ self context at: #dir put: (dir splitOn: '/') ].
 	extTitle := self dirString.
-	self context at: #pod put: anArgs first.
+	self contextAt: #pod put: anArgs first.
 	subCmds replaceAll: self with: clone.
 	^ super runUI: anArgs
 ]

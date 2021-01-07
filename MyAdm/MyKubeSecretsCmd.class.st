@@ -37,9 +37,19 @@ MyKubeSecretsCmd >> run: anArgs [
 
 ]
 
+{ #category : #running }
+MyKubeSecretsCmd >> runUI: anArgs [
+	self contextAt: #pod put: anArgs first.
+	^ super runUI: anArgs.
+]
+
 { #category : #utilities }
 MyKubeSecretsCmd >> selectionAsArgs: aCmdName [
 	| sel |
 	sel := presenter selection.
-	^ sel ifNotNil: [ sel first ]
+	^ sel ifNotNil: [
+		aCmdName = 'Get Secret'
+			ifTrue: [ { sel first first. context at: #pod } ]
+			ifFalse: [ sel first ].
+	]
 ]

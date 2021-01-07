@@ -39,13 +39,20 @@ MyKubeSecretCmd >> run: anArgs [
 
 ]
 
+{ #category : #running }
+MyKubeSecretCmd >> runUI: anArgs [
+	"arg1 - secret item; optional arg2 - pod"
+	anArgs size = 2 ifTrue: [ self contextAt: #pod put: anArgs second ].
+	^ super runUI: anArgs.
+]
+
 { #category : #utilities }
 MyKubeSecretCmd >> selectionAsArgs: aCmdName [
 	| sel |
 	sel := presenter selection.
 	^ sel ifNotNil: [
 		aCmdName = 'Decode Base64'
-			ifTrue: [ { sel first second } ]
+			ifTrue: [ { sel first second. sel first first. context at: #pod. } ]
 			ifFalse: [ sel ]
 	]
 ]

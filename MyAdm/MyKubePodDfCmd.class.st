@@ -41,7 +41,7 @@ MyKubePodDfCmd >> run: anArgs [
 
 { #category : #running }
 MyKubePodDfCmd >> runUI: anArgs [
-	self context at: #pod put: anArgs first.
+	self contextAt: #pod put: anArgs first.
 	^ super runUI: anArgs
 ]
 
