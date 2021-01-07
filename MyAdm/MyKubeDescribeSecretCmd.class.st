@@ -19,7 +19,7 @@ MyKubeDescribeSecretCmd >> initializeWithExec: anExec [
 
 	self
 		initializeWithName: 'Describe Secret'
-		subCmds: { MyKubeBase64Cmd newCmd: anExec }
+		subCmds: #()
 		exec: anExec
 		parser: MyPlainTextParser new
 		presenter: MyTextPresenter

@@ -30,6 +30,12 @@ MyKubeSecretsCmd >> initializeWithExec: anExec [
 
 ]
 
+{ #category : #testing }
+MyKubeSecretsCmd >> isEnabledForSelection: aPresentCmd [
+	"Returns boolean flag is the command enbaled for this selection"
+	^ aPresentCmd selectedCount = 1
+]
+
 { #category : #utilities }
 MyKubeSecretsCmd >> run: anArgs [
 	"Ignores all arguments because it does not require them"
