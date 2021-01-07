@@ -127,7 +127,6 @@ MyKubePodFsCmd >> runUI: anArgs [
 	extTitle := self dirString.
 	self contextAt: #pod put: anArgs first.
 	subCmds replace: [ :each | each class == self class ifTrue: [ clone ] ifFalse: [ each ] ].
-	"subCmds replaceAll: self with: clone."
 	^ super runUI: anArgs
 ]
 
