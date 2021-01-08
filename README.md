@@ -1,5 +1,7 @@
 # MyAdm - Visual scripts for devops
 
+A set of "visual" scripts (UI for Kubernetes) and framework for creating UIs for commands running through sockets, shells, PowerShell, SSH with predefined output parsers and presenters.
+
 <img src="Screens/screen1.png">
 
 ## Usage
