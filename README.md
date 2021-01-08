@@ -38,6 +38,23 @@ Interesting parameter here is a `remoteBin`. It is a folder on the remote system
 
 Toolbar buttons execute commands and open a new window with the command's output. If SHIFT key is pressed while the toolbar's button is clicking then the previous window will be closed.
 
+## Features
+
+Currently supported features are:
+
+- browsing of PODs list
+- browsing of POD's environment
+- browsing of POD's disks volumes
+- output of POD's processes command
+- browsing of the IP/NICs list
+- browsing of POD's routes table
+- browsing of POD's sockets states
+- browsing of POD's YAML file
+- browsing of services list
+- browsing of secrets with details, there plain contents, modification if them
+- browsing of file system of the POD
+- browsing of POD's files content, editing of them, downloading of them
+
 ## Work scenario
 
 `MyKubeScript1` is a set of "visual scripts" or a scriptable/modifiable Kubernetes UI. It's easy to extend it, to add another commands. `MyKubeScript1` uses `MySshExec` executor and it was implemented for the scenario:
