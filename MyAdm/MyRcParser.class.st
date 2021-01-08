@@ -109,7 +109,7 @@ MyRcParser >> parse: aString [
 	items := columnsDelim
 		ifNil: [ lines collectWithIndex: [ :line :i | { 'VAR', i asString. line } ] ]
 		ifNotNil: [
-			lines collect: [ :line | line splitOn: columnsDelim ]
+			lines collect: [ :line | self splitToColumns: line ]
 			      thenReject: [ :line | line size ~= 2]
 		].
 
@@ -125,4 +125,14 @@ MyRcParser >> splitLines: aString [
 	| lines |
 	lines := self dataLines: (self class splitLines: aString).
 	^ lines reject: [ :line | self isCommentedLine: line ].
+]
+
+{ #category : #utilities }
+MyRcParser >> splitToColumns: aString [
+	"Splits aString into columns, but only by the first delimiter. If no delimiter found, returns list with aString only"
+	| i |
+	i := aString indexOf: columnsDelim.
+	i = 0 ifTrue: [ ^ { aString } ].
+	^ { aString copyFrom: 1 to: i - 1. aString copyFrom: i + 1 to: aString size. }.
+	
 ]
