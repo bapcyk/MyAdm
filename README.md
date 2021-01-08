@@ -37,3 +37,31 @@ Interesting parameter here is a `remoteBin`. It is a folder on the remote system
 ## UI
 
 Toolbar buttons execute commands and open a new window with the command's output. If SHIFT key is pressed while the toolbar's button is clicking then the previous window will be closed.
+
+## Work scenario
+
+`MyKubeScript1` is a set of "visual scripts" or a scriptable/modifiable Kubernetes UI. It's easy to extend it, to add another commands. `MyKubeScript1` uses `MySshExec` executor and it was implemented for the scenario:
+
+```
++---------------+               +--------------------------+  .----> POD
+|               |               |       Linux machine      | '       ...
+|  Windows box  +---<OpenSSH>---+           with           + ------> POD
+|               |               |   <REMOTE-BIN>/kubectl   | \       ...
++---------------+               +--------------------------+  '----> POD
+```
+
+The prefect scenario for remote work!
+
+## Installation
+
+1. Install Pharo 9.
+2. Clone this repository with Iceberg (into MyAdm package)
+3. Install OpenSSH for Windows
+4. Configure SSH so to be able to connect to the Linux machine without a password (set ssh-agent service to run manually and start it or to run automatically, generate pub/priv keys with ssh-keygen, put it to the authorized_keys on the Linux machine, add private key to the ssh-agent)
+5. Open Playground in the Pharo
+6. Write there `MyKubeScript1 new run.`
+7. Do it with CTRL-D.
+
+## Another scenario
+
+To use local `kubectl`, change `MyKubeScript1` `run` method to use `MyShExec` or `MyPoshExec` executor (tbh, not tested completely).
